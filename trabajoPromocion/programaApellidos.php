@@ -5,7 +5,7 @@ include_once("wordix.php");
 
 /**************************************/
 /***** DATOS DE LOS INTEGRANTES *******/
-/**************************************/
+// Facundo Ledesma
 
 /* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github */
 /* ****COMPLETAR***** */
