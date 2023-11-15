@@ -205,7 +205,7 @@ function resumenJugador ($partidas,$jugador){
     $cant=count($cargarPartidas);
     for ($i=0; $i<$cant;$i++);
         if ($partidas[$i]["jugador"] == $jugador){
-            
+
         }
     $resumen = [
         'jugador' => $jugador, 'partidas'=> $partidas, 'puntaje' => $puntaje, 'victorias'=> $victorias,
@@ -278,11 +278,13 @@ print_r($partida);
                         echo "\nIngrese el nombre del jugador que desea observar sus estadisticas: ";
                         $nombJugador=trim(fgets(STDIN));
                         
-                        while (){
+        
 
                         }
 
                     }
+                    break;
+                    
             case 6:
                 // mostrarResumenJugador
                 $resumen = [
