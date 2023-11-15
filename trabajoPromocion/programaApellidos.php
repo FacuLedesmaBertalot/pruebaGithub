@@ -91,14 +91,14 @@ function mostrarPartida($numPartidas) {  // * recorrido parcial * //
             echo "Ingrese el número de partida que desea observar: ";
             $numPartida = trim(fgets(STDIN));
         }
-        $i = $i + 1;
+        $i++;
         
         echo "***************************************************\n";
         echo "Partida WORDIX ". $datos[$i]["intentos"] . ": palabra ". $datos[$i]["palabraWordix"] . "\n";
         echo "Jugador: ". $datos[$i]["jugador"] ."\n";
-        echo "Puntaje: ". $datos[$i]["puntaje"] . "puntos\n";
+        echo "Puntaje: ". $datos[$i]["puntaje"] . " puntos\n";
         if ($datos[$i]["intentos"] = true) {
-            echo "Adivinó la palabra en ". $datos[$i]["intentos"] ." intentos\n";
+            echo "Adivinó la palabra en ". $datos[$i]["intentos"] ." intentos.\n";
              echo "***************************************************\n";
         }
         else {
@@ -109,18 +109,29 @@ function mostrarPartida($numPartidas) {  // * recorrido parcial * //
 
 
 /** Dada una colección de partidas retorna el índice de la primer partida ganada, y si no ganó ninguna retorna el valor -1
- * @param array $coleccionPartidas
+ * @param array $partidas
  * @param string $nombre
  * @return int
  */
-function primerPartidaGanada($coleccionPartidas, $nombre) {
-    foreach ($coleccionPartidas as $indice => $partida) {
-        if ($partida['intentos'] === $nombre) {
-            return $indice;
+function primerPartidaGanada($partidas, $nombre) {
+    // int $indice
+    // bool $encontrada
+
+    $indice = -1;
+    $encontrada = false;
+    
+    while ($partidas["jugador"] == $nombre  &&  !$encontrada){
+
+        if ($partidas["puntaje"] > 0){
+            
+            $partidas[$indice] = $indice;
+            $encontrada = true;
         }
+          $indice++;
+        }
+
+        return $indice;
     }
-    return -1;
-}
 
 /** Dada una colección de partidas retorna el resumen del jugador
  * @param array $coleccionPartidas
@@ -237,8 +248,18 @@ return $coleccionPalabras;
                 
                 break;
                 
-            case 4: 
-                // mostrarPartidaGanadora
+            case 4:
+                echo "\nIngrese el nombre del jugador que desea observar su primer victoria: ";
+                $jugador = trim(fgets(STDIN)); 
+
+                $primerPartidaGanada = primerPartidaGanada($partidas, $jugador);
+
+                if ($primerPartidaGanada == -1) {
+                    echo "El jugador ". $usuario . " no ganó ninguna partida. \n";
+                } else {
+                    print_r($primerPartidaGanada);
+                }
+
 
             case 5: 
                 // mostrarEstadisticas
