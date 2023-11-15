@@ -106,16 +106,6 @@ function mostrarPartida() {  // * recorrido parcial * //
         }
     }
 
-/** Función que permite agregar una palabra más al array
- * @param array $palabrasArray
- * @param string $nuevaPalabra
- * @return array
- */
-function agregarPalabra($coleccionPalabras, $nuevaPalabra) {
-    $coleccionPalabras[] = $nuevaPalabra;
-
-    return $coleccionPalabras; 
-}
 
 /** Dada una colección de partidas retorna el índice de la primer partida ganada, y si no ganó ninguna retorna el valor -1
  * @param array $coleccionPartidas
@@ -164,7 +154,39 @@ function solicitarJugador() {
     }
 }
 
+/**
+ * Funcion que retorna falso si la palabra no se encuentra en la lista y verdadero si dicha palabra se encuentra
+ * @param ARRAY $coleccionPalabras
+ * @param STRING $palabra
+ * @return BOOLEAN
+ */
+function existePalabra ($coleccionPalabras, $palabra){
+    
+    $encontrada= false;
+    $i=0;
+    $cant=count($coleccionPalabras);
+    while ($i<$cant  &&  !$encontrada){
+     
+        if ($coleccionPalabras[$i]==$palabra){
+            $encontrada=true;
+        }
+        $i++;
+    }
 
+    return $encontrada;
+}
+
+
+/** */
+function agregarPalabra ($coleccionPalabras, $palabra){
+// 
+
+$nuevaPosicion=count($coleccionPalabras)+1;
+$coleccionPalabras[$nuevaPosicion]=$palabra;
+
+return $coleccionPalabras;
+
+}
 
 
 
@@ -233,9 +255,16 @@ function solicitarJugador() {
                 print_r($resumen); // print_r: muestra información sobre una variable en una forma que es legible por humanos.
 
             case 7:
-                $palabraIngresada = leerPalabra5Letras();
-                $nuevoArreglo = agregarPalabra($palabras, $palabraIngresada);
-                echo "Usted ha ingresado la palabra " . $palabraIngresada . ".\n";
+                //agrega nueva palabra a la coleccion
+              
+                $nuevaPalabra= leerPalabra5Letras();
+                $existe=existePalabra($palabras,$nuevaPalabra);
+                if ($existe==true){
+                    echo "la palabra ya se encuentra en la lista   \n";
+                }else{
+                    $palabras=agregarPalabra($palabras,$nuevaPalabra);
+                }
+              print_r($palabras);
                 break;
             case 3: 
                 //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
