@@ -38,15 +38,21 @@ function cargarColeccionPalabras()
 function cargarPartidas() {
     $cargarPartidas = [];
     $cargarPartidas[0] = ["palabraWordix"=> "QUESO", "jugador"=> "majo", "intentos"=> 0, "puntaje"=> 0];
-    $cargarPartidas[1] = ["palabraWordix"=> "MUJER", "jugador"=> "majo", "intentos"=> 6, "puntaje"=> 10];
-    $cargarPartidas[2] = ["palabraWordix"=> "GATOS", "jugador"=> "kevin", "intentos"=> 5, "puntaje"=> 11];
+    $cargarPartidas[1] = ["palabraWordix"=> "MUJER", "jugador"=> "majo", "intentos"=> 6, "puntaje"=> 0];
+    $cargarPartidas[2] = ["palabraWordix"=> "GATOS", "jugador"=> "kevin", "intentos"=> 5, "puntaje"=> 2];
     $cargarPartidas[3] = ["palabraWordix"=> "MELON", "jugador"=> "kevin", "intentos"=> 6, "puntaje"=> 0];
     $cargarPartidas[4] = ["palabraWordix"=> "QUESO", "jugador"=> "kevin", "intentos"=> 1, "puntaje"=> 6];
     $cargarPartidas[5] = ["palabraWordix"=> "PESOS", "jugador"=> "santiago", "intentos"=> 6, "puntaje"=> 0];
     $cargarPartidas[6] = ["palabraWordix"=> "FUEGO", "jugador"=> "santiago", "intentos"=> 2, "puntaje"=> 5];
-    $cargarPartidas[7] = ["palabraWordix"=> "LOCRO", "jugador"=> "santiago", "intentos"=> 6, "puntaje"=> 10];
+    $cargarPartidas[7] = ["palabraWordix"=> "LOCRO", "jugador"=> "santiago", "intentos"=> 6, "puntaje"=> 0];
     $cargarPartidas[8] = ["palabraWordix"=> "PIANO", "jugador"=> "lucia", "intentos"=> 0, "puntaje"=> 0];
-    $cargarPartidas[9] = ["palabraWordix"=> "PASTO", "jugador"=> "lucia", "intentos"=> 2, "puntaje"=> 5]; 
+    $cargarPartidas[9] = ["palabraWordix"=> "PASTO", "jugador"=> "lucia", "intentos"=> 2, "puntaje"=> 5];
+    $cargarPartidas[10]= ["palabraWordix"=> "QUESO", "jugador"=> "martin", "intentos"=>2,"puntaje"=>5];
+    $cargarPartidas[11]= ["palabraWordix"=> "PASTO", "jugador"=> "martin", "intentos"=>4,"puntaje"=>3];
+    $cargarPartidas[12]= ["palabraWordix"=> "FUEGO", "jugador"=> "luciana", "intentos"=>1,"puntaje"=>6];
+    $cargarPartidas[13]= ["palabraWordix"=> "QUESO", "jugador"=> "maria", "intentos"=>2,"puntaje"=>5];
+    $cargarPartidas[14]= ["palabraWordix"=> "LINDO", "jugador"=> "maria", "intentos"=>4,"puntaje"=>3];
+    $cargarPartidas[15]= ["palabraWordix"=> "YUYOS", "jugador"=> "marcos", "intentos"=>2,"puntaje"=>5]; 
     
     return $cargarPartidas;   
 }
@@ -97,6 +103,7 @@ function mostrarPartida($numPartidas, $num) {  // * recorrido parcial * //
         }
     }
 
+    
 
 /** Dada una colección de partidas retorna el índice de la primer partida ganada, y si no ganó ninguna retorna el valor -1
  * @param array $partidas
@@ -130,24 +137,6 @@ function primerPartidaGanada($partidas, $nombre) {
     return $indice;
 }
 
-/** Dada una colección de partidas retorna el resumen del jugador
- * @param array $coleccionPartidas
- * @param string $nombreUsuario
- * @return array
- */
-function resumenJugador($coleccionPartidas, $nombreUsuario) {
-    // int $orden
-    if ($coleccionPartidas == $nombreUsuario) {
-        $orden = 0;
-    }
-    elseif ($coleccionPartidas < $nombreUsuario) {
-        $orden = -1;
-    }
-    else {
-        $orden = 1;
-    }
-    return $orden;
-}
 
 /** Función que solicita el nombre del jugador
  * @return string
@@ -171,6 +160,8 @@ function solicitarJugador() {
  * @return BOOLEAN
  */
 function existePalabra ($coleccionPalabras, $palabra){
+    //BOOLEAN $encontrada
+    // INT $i, $cant
     
     $encontrada= false;
     $i=0;
@@ -187,9 +178,13 @@ function existePalabra ($coleccionPalabras, $palabra){
 }
 
 
-/** */
+/** 
+ * @param ARRAY $coleccionPalabras
+ * @param STRING $palabra
+ * @return ARRAY
+*/
 function agregarPalabra ($coleccionPalabras, $palabra){
-// 
+// INT $nuevaPosicion
 
 $nuevaPosicion=count($coleccionPalabras)+1;
 $coleccionPalabras[$nuevaPosicion]=$palabra;
@@ -199,7 +194,23 @@ return $coleccionPalabras;
 }
 
 
+/**
+ * 
+ */
+function resumenJugador ($partidas,$jugador){
+    
+    $cant=count($cargarPartidas);
+    for ($i=0; $i<$cant;$i++);
+        if ($partidas[$i]["jugador"] == $jugador){
+            
+        }
+    $resumen = [
+        'jugador' => $jugador, 'partidas'=> $partidas, 'puntaje' => $puntaje, 'victorias'=> $victorias,
+        'intento1' => $intento1, 'intento2' => $intento2, 'intento3' => $intento3, 'intento4' => $intento4, 
+        'intento5' => $intento5, 'intento6' => $intento6
+    ];
 
+}
 
 
 /* ****COMPLETAR***** */
@@ -218,8 +229,8 @@ return $coleccionPalabras;
 
 //Proceso:
 
-//$partida = jugarWordix("MELON", strtolower("MaJo"));
-//print_r($partida);
+$partida = jugarWordix("MELON", strtolower("MaJo"));
+print_r($partida);
 //imprimirResultado($partida);
 
 
@@ -262,7 +273,15 @@ return $coleccionPalabras;
 
             case 5: 
                 // mostrarEstadisticas
+                    function mostrarEstadisticas(){
+                        echo "\nIngrese el nombre del jugador que desea observar sus estadisticas: ";
+                        $nombJugador=trim(fgets(STDIN));
+                        
+                        while (){
 
+                        }
+
+                    }
             case 6:
                 // mostrarResumenJugador
                 $resumen = [
