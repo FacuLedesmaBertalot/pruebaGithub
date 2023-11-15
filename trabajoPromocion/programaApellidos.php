@@ -197,7 +197,23 @@ return $coleccionPalabras;
 }
 
 
+/**
+ * 
+ */
+function resumenJugador ($partidas,$jugador){
+    
+    $cant=count($cargarPartidas);
+    for ($i=0; $i<$cant;$i++);
+        if ($partidas[$i]["jugador"] == $jugador){
+            
+        }
+    $resumen = [
+        'jugador' => $jugador, 'partidas'=> $partidas, 'puntaje' => $puntaje, 'victorias'=> $victorias,
+        'intento1' => $intento1, 'intento2' => $intento2, 'intento3' => $intento3, 'intento4' => $intento4, 
+        'intento5' => $intento5, 'intento6' => $intento6
+    ];
 
+}
 
 
 /* ****COMPLETAR***** */
@@ -216,8 +232,8 @@ return $coleccionPalabras;
 
 //Proceso:
 
-//$partida = jugarWordix("MELON", strtolower("MaJo"));
-//print_r($partida);
+$partida = jugarWordix("MELON", strtolower("MaJo"));
+print_r($partida);
 //imprimirResultado($partida);
 
 
@@ -258,7 +274,15 @@ return $coleccionPalabras;
 
             case 5: 
                 // mostrarEstadisticas
+                    function mostrarEstadisticas(){
+                        echo "\nIngrese el nombre del jugador que desea observar sus estadisticas: ";
+                        $nombJugador=trim(fgets(STDIN));
+                        
+                        while (){
 
+                        }
+
+                    }
             case 6:
                 // mostrarResumenJugador
                 $resumen = [
