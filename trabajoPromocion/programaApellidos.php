@@ -74,11 +74,12 @@ function seleccionarOpcion() {
 
 
 /** Se le solicita al usuario un número de partida y se muestra en pantalla
+ * @param array $numPartidas
  * @return string
  */
-function mostrarPartida() {  // * recorrido parcial * // 
-    // INT $numPartida, $n, $i
-    $datos = jugarWordix(cargarColeccionPalabras(), "jugador");
+function mostrarPartida($numPartidas) {  // * recorrido parcial * // 
+    // int $numPartida, $n, $i
+    $datos = $numPartidas;
     $n = count($datos);
     $i = 0;
 
@@ -127,6 +128,7 @@ function primerPartidaGanada($coleccionPartidas, $nombre) {
  * @return array
  */
 function resumenJugador($coleccionPartidas, $nombreUsuario) {
+    // int $orden
     if ($coleccionPartidas == $nombreUsuario) {
         $orden = 0;
     }
@@ -230,7 +232,7 @@ return $coleccionPalabras;
                 break;
 
             case 3:
-                $mostrar = mostrarPartida();
+                $mostrar = mostrarPartida($partidas);
                 print_r($mostrar);
                 
                 break;
@@ -265,10 +267,6 @@ return $coleccionPalabras;
                     $palabras=agregarPalabra($palabras,$nuevaPalabra);
                 }
               print_r($palabras);
-                break;
-            case 3: 
-                //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
-
                 break;
 
                 case 8:
