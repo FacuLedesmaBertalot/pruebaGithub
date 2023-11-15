@@ -81,35 +81,25 @@ function seleccionarOpcion() {
 
 /** Se le solicita al usuario un número de partida y se muestra en pantalla
  * @param array $numPartidas
+ * @param int $num
  * @return string
  */
-function mostrarPartida($numPartidas) {  // * recorrido parcial * // 
+function mostrarPartida($numPartidas, $num) {  // * recorrido parcial * // 
     // int $numPartida, $n, $i
-    $datos = $numPartidas;
-    $n = count($datos);
-    $i = 0;
+    $n = count($numPartidas);
+    $i = $num-1;
 
-    echo "Ingrese el número de partida que desea observar: ";
-    $numPartida = trim(fgets(STDIN));
-    
-        while ($i < $n && $numPartida < 0 ) {
-            echo "No existe el número de partida ingresado. \n";
-            echo "Ingrese el número de partida que desea observar: ";
-            $numPartida = trim(fgets(STDIN));
-        }
-        $i++;
-        
         echo "***************************************************\n";
-        echo "Partida WORDIX ". $datos[$i]["intentos"] . ": palabra ". $datos[$i]["palabraWordix"] . "\n";
-        echo "Jugador: ". $datos[$i]["jugador"] ."\n";
-        echo "Puntaje: ". $datos[$i]["puntaje"] . " puntos\n";
-        if ($datos[$i]["intentos"] = true) {
-            echo "Adivinó la palabra en ". $datos[$i]["intentos"] ." intentos.\n";
+        echo "Partida WORDIX ". $num . ": palabra ". $numPartidas[$i]["palabraWordix"] . "\n";
+        echo "Jugador: ". $numPartidas[$i]["jugador"] ."\n";
+        echo "Puntaje: ". $numPartidas[$i]["puntaje"] . " puntos\n";
+        if ($numPartidas[$i]["intentos"] != 0) {
+            echo "Adivinó la palabra en ". $numPartidas[$i]["intentos"] ." intentos.\n";
              echo "***************************************************\n";
         }
         else {
             echo "No adivinó la palabra";
-             echo "***************************************************\n";
+            echo "***************************************************\n";
         }
     }
 
@@ -126,19 +116,26 @@ function primerPartidaGanada($partidas, $nombre) {
 
     $indice = -1;
     $encontrada = false;
-    
-    while ($partidas["jugador"] == $nombre  &&  !$encontrada){
+    $i = 0;
+    $cantPartidas = count($partidas);
+    // partidas[0]
+    // ["palabraWordix" => "PIANO", ]
 
-        if ($partidas["puntaje"] > 0){
-            
-            $partidas[$indice] = $indice;
-            $encontrada = true;
-        }
-          $indice++;
-        }
 
-        return $indice;
+    while ( $i < $cantPartidas &&  !$encontrada){
+
+        if ($partidas[$i]["jugador"] == $nombre) {
+
+            if ($partidas["puntaje"] > 0){
+
+                $indice = $i;
+                $encontrada = true;
+            }
+        }
+        $i++;
     }
+    return $indice;
+}
 
 
 /** Función que solicita el nombre del jugador
@@ -254,7 +251,8 @@ print_r($partida);
                 break;
 
             case 3:
-                $mostrar = mostrarPartida($partidas);
+                $numSolicitado = solicitarNumeroEntre(1, count($partidas));
+                $mostrar = mostrarPartida($partidas, $numSolicitado);
                 print_r($mostrar);
                 
                 break;
@@ -268,8 +266,9 @@ print_r($partida);
                 if ($primerPartidaGanada == -1) {
                     echo "El jugador ". $usuario . " no ganó ninguna partida. \n";
                 } else {
-                    print_r($primerPartidaGanada);
+                    print_r(mostrarPartida($mostrar, $num));
                 }
+                break;
 
 
             case 5: 
