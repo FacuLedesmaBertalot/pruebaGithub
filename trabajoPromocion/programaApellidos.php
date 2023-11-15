@@ -192,7 +192,7 @@ function solicitarJugador() {
 //print_r($partida);
 //imprimirResultado($partida);
 
-    $palabras = [];
+
     $palabras = cargarColeccionPalabras();
     $partidas = cargarPartidas();
     $usuario = solicitarJugador();
