@@ -280,8 +280,6 @@ print_r($partida);
         
 
                         }
-
-                    }
                     break;
                     
             case 6:
@@ -316,5 +314,4 @@ print_r($partida);
         
                 //...
     }
-    } while ($opcion != 0);
-
+     while ($opcion != 0);
