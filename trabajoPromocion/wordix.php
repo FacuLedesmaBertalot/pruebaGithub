@@ -365,6 +365,8 @@ function obtenerPuntajeWordix($nroIntento, $teclado)  /* ****COMPLETAR***** par√
 
     if ($puntajeIntento != 0) {
         $puntaje = $puntajeIntento + $puntajeTeclado;
+    } else {
+        $puntaje = 0;
     }
     
     /* ****COMPLETAR***** cuerpo de la funci√≥n*/
