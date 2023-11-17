@@ -118,9 +118,6 @@ function primerPartidaGanada($partidas, $nombre) {
     $encontrada = false;
     $i = 0;
     $cantPartidas = count($partidas);
-    // partidas[0]
-    // ["palabraWordix" => "PIANO", ]
-
 
     while ( $i < $cantPartidas &&  !$encontrada){
 
@@ -178,7 +175,7 @@ function existePalabra ($coleccionPalabras, $palabra){
 }
 
 
-/** 
+/** Agrega una palabra nueva al arreglo de la colección de palabras
  * @param ARRAY $coleccionPalabras
  * @param STRING $palabra
  * @return ARRAY
@@ -314,4 +311,5 @@ print_r($partida);
         
                 //...
     }
+}
      while ($opcion != 0);
