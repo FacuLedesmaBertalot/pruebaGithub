@@ -87,18 +87,18 @@ function seleccionarOpcion() {
 function mostrarPartida($numPartidas, $num) {  // * recorrido parcial * // 
     // int $numPartida, $n, $i
     $n = count($numPartidas);
-    $i = $num-1;
+    $i = $num - 1;
 
         echo "***************************************************\n";
         echo "Partida WORDIX ". $num . ": palabra ". $numPartidas[$i]["palabraWordix"] . "\n";
         echo "Jugador: ". $numPartidas[$i]["jugador"] ."\n";
         echo "Puntaje: ". $numPartidas[$i]["puntaje"] . " puntos\n";
-        if ($numPartidas[$i]["intentos"] != 0) {
+        if ($numPartidas[$i]["intentos"] != 6) {
             echo "Adivinó la palabra en ". $numPartidas[$i]["intentos"] ." intentos.\n";
              echo "***************************************************\n";
         }
         else {
-            echo "No adivinó la palabra";
+            echo "No adivinó la palabra\n";
             echo "***************************************************\n";
         }
     }
@@ -123,9 +123,9 @@ function primerPartidaGanada($partidas, $nombre) {
 
         if ($partidas[$i]["jugador"] == $nombre) {
 
-            if ($partidas["puntaje"] > 0){
+            if ($partidas[$i]["puntaje"] > 0){
 
-                $indice = $i;
+                $indice = $i + 1;
                 $encontrada = true;
             }
         }
@@ -226,8 +226,8 @@ function resumenJugador ($partidas,$jugador){
 
 //Proceso:
 
-$partida = jugarWordix("MELON", strtolower("MaJo"));
-print_r($partida);
+// $partida = jugarWordix("MELON", strtolower("MaJo"));
+// print_r($partida);
 //imprimirResultado($partida);
 
 
@@ -257,13 +257,13 @@ print_r($partida);
             case 4:
                 echo "\nIngrese el nombre del jugador que desea observar su primer victoria: ";
                 $jugador = trim(fgets(STDIN)); 
-
                 $primerPartidaGanada = primerPartidaGanada($partidas, $jugador);
 
                 if ($primerPartidaGanada == -1) {
-                    echo "El jugador ". $usuario . " no ganó ninguna partida. \n";
+                    echo "El jugador ". $jugador . " no ganó ninguna partida. \n";
                 } else {
-                    print_r(mostrarPartida($mostrar, $num));
+                    $mostrar = mostrarPartida($partidas, $primerPartidaGanada);
+                    print_r($mostrar);
                 }
                 break;
 
