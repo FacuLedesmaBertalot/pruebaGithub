@@ -235,16 +235,29 @@ function resumenJugador ($partidas,$jugador){
     $partidas = cargarPartidas();
     $usuario = solicitarJugador();
     escribirMensajeBienvenida($usuario);
-
+    $palabraSeleccionada = [];
 
     do {
         $opcion = seleccionarOpcion();
         switch ($opcion) {
             case 1: 
-                $partida = jugarWordix($palabras, $usuario);
+                echo "Elija el número de la palabra que desea seleccionar: \n";
+                print_r($palabras);
+                
+                $num = trim(fgets(STDIN));
+                
+                while (in_array($num, $palabraSeleccionada)) { // in_array: recorre el array $palabraSeleccionada y se fija si el $num ya existe en él
+                    echo "El número de palabra ya fue seleccionado por el jugador. \n";
+                    echo "Elija otro número de palabra: ";
+                    $num = trim(fgets(STDIN));
+                }
+
+                $palabraSeleccionada[] = $num;
+
+                $partida = jugarWordix($palabras[$num], $usuario);
                 break;
             case 2:
-                $partida = jugarWordix($palabras, $usuario);
+                $partida = jugarWordix($palabras, $usuario);    // $palabraAleatoria = $coleccionPalabras[array_rand($coleccionPalabras)];
                 break;
 
             case 3:
@@ -291,6 +304,7 @@ function resumenJugador ($partidas,$jugador){
                     echo "$indice = $elemento\n";
                 }
                 print_r($resumen); // print_r: muestra información sobre una variable en una forma que es legible por humanos.
+                break;
 
             case 7:
                 //agrega nueva palabra a la coleccion
@@ -305,11 +319,10 @@ function resumenJugador ($partidas,$jugador){
               print_r($palabras);
                 break;
 
-                case 8:
-                    echo "Saliendo del programa. ";
-                    exit;
-        
-                //...
+            case 8:
+                echo "Saliendo del programa. ";
+                exit;
+
     }
 }
      while ($opcion != 0);

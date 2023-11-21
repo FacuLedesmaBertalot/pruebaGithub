@@ -337,17 +337,17 @@ function obtenerPuntajeWordix($nroIntento, $teclado)  /* ****COMPLETAR***** par√
 
     $puntajeTeclado = 0;
     $vocales = ['a', 'e', 'i', 'o', 'u'];
-    if ($nroIntento = 1) {
+    if ($nroIntento == 1) {
         $puntajeIntento = 6;
-    } elseif ($nroIntento = 2) {
+    } elseif ($nroIntento == 2) {
         $puntajeIntento = 5;
-    } elseif ($nroIntento = 3) {
+    } elseif ($nroIntento == 3) {
         $puntajeIntento = 4;
-    } elseif ($nroIntento = 4) {
+    } elseif ($nroIntento == 4) {
         $puntajeIntento = 3;
-    } elseif ($nroIntento = 5) {
+    } elseif ($nroIntento == 5) {
         $puntajeIntento = 2;
-    } elseif ($nroIntento = 6) {
+    } elseif ($nroIntento == 6) {
         $puntajeIntento = 1;
     } else {
         $puntajeIntento = 0;
@@ -355,11 +355,11 @@ function obtenerPuntajeWordix($nroIntento, $teclado)  /* ****COMPLETAR***** par√
 
     foreach ($teclado as $teclado) {
         if (in_array($teclado, $vocales)) {
-            $puntajeTeclado =+ 1;
+            $puntajeTeclado = $puntajeTeclado + 1;
         } elseif ($teclado <= "M" && !$vocales) {
-            $puntajeTeclado =+ 2;
+            $puntajeTeclado = $puntajeTeclado + 2;
         } elseif ($teclado <= "M" && !$vocales) {
-            $puntajeTeclado =+ 3;
+            $puntajeTeclado = $puntajeTeclado + 3;
         }
     }
 
