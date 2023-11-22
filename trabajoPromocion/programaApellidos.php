@@ -87,22 +87,21 @@ function seleccionarOpcion() {
 function mostrarPartida($numPartidas, $num) {  // * recorrido parcial * // 
     // int $numPartida, $n, $i
     $n = count($numPartidas);
-    $i = $num-1;
+    $i = $num - 1;
 
         echo "***************************************************\n";
         echo "Partida WORDIX ". $num . ": palabra ". $numPartidas[$i]["palabraWordix"] . "\n";
         echo "Jugador: ". $numPartidas[$i]["jugador"] ."\n";
         echo "Puntaje: ". $numPartidas[$i]["puntaje"] . " puntos\n";
-        if ($numPartidas[$i]["intentos"] != 0) {
+        if ($numPartidas[$i]["intentos"] != 6) {
             echo "Adivinó la palabra en ". $numPartidas[$i]["intentos"] ." intentos.\n";
              echo "***************************************************\n";
         }
         else {
-            echo "No adivinó la palabra";
+            echo "No adivinó la palabra\n";
             echo "***************************************************\n";
         }
     }
-
 
 /** Dada una colección de partidas retorna el índice de la primer partida ganada, y si no ganó ninguna retorna el valor -1
  * @param array $partidas
@@ -117,17 +116,14 @@ function primerPartidaGanada($partidas, $nombre) {
     $encontrada = false;
     $i = 0;
     $cantPartidas = count($partidas);
-    // partidas[0]
-    // ["palabraWordix" => "PIANO", ]
-
 
     while ( $i < $cantPartidas &&  !$encontrada){
 
         if ($partidas[$i]["jugador"] == $nombre) {
 
-            if ($partidas["puntaje"] > 0){
+            if ($partidas[$i]["puntaje"] > 0){
 
-                $indice = $i;
+                $indice = $i + 1;
                 $encontrada = true;
             }
         }
@@ -177,7 +173,7 @@ function existePalabra ($coleccionPalabras, $palabra){
 }
 
 
-/** 
+/** Agrega una palabra nueva al arreglo de la colección de palabras
  * @param ARRAY $coleccionPalabras
  * @param STRING $palabra
  * @return ARRAY
@@ -195,6 +191,8 @@ return $coleccionPalabras;
 
 function estadisticasJugador ($partidas, $jugador){
     
+    
+    $victoriaJugador=0;
     $puntajeTotal=0;
     $partidasJugadas = 0;
     foreach ($partidas as $partida) {
@@ -202,22 +200,24 @@ function estadisticasJugador ($partidas, $jugador){
             $partidasJugadas=$partidasJugadas+1;
             $puntajeTotal=$puntajeTotal+$partida["puntaje"];
             if ($partida["puntaje"] > 0){
-                
+                $victoriaJugador = $victoriaJugador+1;
             }
+            $porcentajeVictorias= ($victoriaJugador*100)/$partidasJugadas;
         }
     }
     $resumen = [
-        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal
+        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,'porcentaje victorias' => $victoriaJugador,
     ];
     return $resumen;
 }
-
-
 
     function mostrarResumen($resumen) {  
         echo "***************************************************\n";
         echo "Jugador: ". $resumen["jugador"] . "\n";
         echo "Partidas: ". $resumen["partidas"] . "\n";
+        echo "Puntaje: ". $resumen["puntaje"] . "\n";
+        echo "Victorias: ". $resumen["victorias"] . "\n";
+        echo "Porcentaje victorias: ". $resumen["victorias"] . "\n";
         echo "***************************************************\n";
     }
 
@@ -246,23 +246,37 @@ function resumenJugador($palabras, $usuario){
 
 //$partida = jugarWordix("MELON", strtolower("MaJo"));
 //print_r($partida);
+
 //imprimirResultado($partida);
 
 
     $palabras = cargarColeccionPalabras();
     $partidas = cargarPartidas();
     $usuario = solicitarJugador();
-   // escribirMensajeBienvenida($usuario);
-
+   escribirMensajeBienvenida($usuario);
+   $palabraSeleccionada = [];
 
     do {
         $opcion = seleccionarOpcion();
         switch ($opcion) {
             case 1: 
-                $partida = jugarWordix($palabras, $usuario);
+                echo "Elija el número de la palabra que desea seleccionar: \n";
+                print_r($palabras);
+                
+                $num = trim(fgets(STDIN));
+                
+                while (in_array($num, $palabraSeleccionada)) { // in_array: recorre el array $palabraSeleccionada y se fija si el $num ya existe en él
+                    echo "El número de palabra ya fue seleccionado por el jugador. \n";
+                    echo "Elija otro número de palabra: ";
+                    $num = trim(fgets(STDIN));
+                }
+
+                $palabraSeleccionada[] = $num;
+
+                $partida = jugarWordix($palabras[$num], $usuario);
                 break;
             case 2:
-                $partida = jugarWordix($palabras, $usuario);
+                $partida = jugarWordix($palabras, $usuario);    // $palabraAleatoria = $coleccionPalabras[array_rand($coleccionPalabras)];
                 break;
 
             case 3:
@@ -275,27 +289,26 @@ function resumenJugador($palabras, $usuario){
             case 4:
                 echo "\nIngrese el nombre del jugador que desea observar su primer victoria: ";
                 $jugador = trim(fgets(STDIN)); 
-
                 $primerPartidaGanada = primerPartidaGanada($partidas, $jugador);
 
                 if ($primerPartidaGanada == -1) {
-                    echo "El jugador ". $usuario . " no ganó ninguna partida. \n";
+                    echo "El jugador ". $jugador . " no ganó ninguna partida. \n";
                 } else {
-                    print_r(mostrarPartida($mostrar, $num));
+                    $mostrar = mostrarPartida($partidas, $primerPartidaGanada);
+                    print_r($mostrar);
                 }
                 break;
 
 
             case 5: 
                 // mostrarEstadisticas
-    
-                        $nombJugador= solicitarJugador();
-                        $listaPartidas= cargarPartidas(); 
-                        $resumen= estadisticasJugador($listaPartidas, $nombJugador);
-
-                        print_r(mostrarResumen($resumen));
-
+                    function mostrarEstadisticas(){
+                        echo "\nIngrese el nombre del jugador que desea observar sus estadisticas: ";
+                        $nombJugador=trim(fgets(STDIN));
                         
+        
+
+                        }
 
                     
                     break;
@@ -312,6 +325,7 @@ function resumenJugador($palabras, $usuario){
                     echo "$indice = $elemento\n";
                 }
                 print_r($resumen); // print_r: muestra información sobre una variable en una forma que es legible por humanos.
+                           break;
 
             case 7:
                 //agrega nueva palabra a la coleccion
@@ -326,11 +340,11 @@ function resumenJugador($palabras, $usuario){
               print_r($palabras);
                 break;
 
-                case 8:
-                    echo "Saliendo del programa. ";
-                    exit;
-        
-                //...
-    }
-    } while ($opcion != 0);
+            case 8:
+                echo "Saliendo del programa. ";
+                exit;
 
+    }
+}while ($opcion != 0);
+
+?>

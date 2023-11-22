@@ -1,4 +1,7 @@
 # wordix
+
+![Alt text](71u1Ro+0m0L.jpg)
+
 Juego Wordix desarrollado en Introducción a la Programación (FAI)
 
 # Materia 2023
