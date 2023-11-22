@@ -245,7 +245,7 @@ function resumenJugador ($partidas,$jugador){
 
     $palabras = cargarColeccionPalabras();
     $partidas = cargarPartidas();
-    $usuario = solicitarJugador();
+    $usuario = solicitarJugador(); // preguntar si es necesario llamar a la función acá
     escribirMensajeBienvenida($usuario);
     $palabraSeleccionada = [];
 
@@ -254,6 +254,7 @@ function resumenJugador ($partidas,$jugador){
         $opcion = seleccionarOpcion();
         switch ($opcion) {
             case 1: 
+                $usuario = solicitarJugador();
                 echo "Elija el número de la palabra que desea seleccionar: \n";
                 print_r($palabras);
                 
@@ -272,7 +273,7 @@ function resumenJugador ($partidas,$jugador){
 
                 break;
             case 2:
-
+                $usuario = solicitarJugador();
                 $aleatoria = rand(1, count($palabras));     // rand: algoritmo que obtiene un número aleatorio sin que se repita
                 $existe = existePalabra($palabras, $aleatoria);
 
@@ -281,7 +282,8 @@ function resumenJugador ($partidas,$jugador){
                 }
 
                 $partida = jugarWordix($palabras[$aleatoria], $usuario);
-                //$nuevasPartida = agregarPartida($partidas, $partida);        // preguntar
+                $nuevaPartida = agregarPartida($partidas, $partida);        // preguntar
+                print_r($nuevaPartida);
 
                 break;
 
