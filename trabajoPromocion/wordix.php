@@ -331,48 +331,47 @@ function esIntentoGanado($estructuraPalabraIntento)
  * @param string $palabra
  * @return int 
  */
-function obtenerPuntajeWordix($nroIntento, $palabra)  /* ****COMPLETAR***** parámetros formales necesarios */
-{   // array $vocales
-    // int $puntajeIntento, $puntajeTeclado, $puntaje
+function obtenerPuntajeWordix($nroIntento, $palabra) 
+    {   // array $vocales
+        // int $puntajeIntento, $puntajeTeclado, $puntaje
 
-    $puntajeLetra = 0;
-    $vocales = ['A', 'E', 'I', 'O', 'U'];
-    if ($nroIntento == 1) {
-        $puntajeIntento = 6;
-    } elseif ($nroIntento == 2) {
-        $puntajeIntento = 5;
-    } elseif ($nroIntento == 3) {
-        $puntajeIntento = 4;
-    } elseif ($nroIntento == 4) {
-        $puntajeIntento = 3;
-    } elseif ($nroIntento == 5) {
-        $puntajeIntento = 2;
-    } elseif ($nroIntento == 6) {
-        $puntajeIntento = 1;
-    } else {
-        $puntajeIntento = 0;
-    }
-
-    for($i = 0 ; $i < strlen($palabra) ; $i++) {
-        $letra = $palabra[$i];
-        if (in_array($letra, $vocales)) {
-            $puntajeLetra = $puntajeLetra + 1;
-        } elseif ($letra>= 'A' && $letra <= 'M') {
-            $puntajeLetra = $puntajeLetra + 2;
+        $puntajeLetra = 0;
+        $vocales = ['A', 'E', 'I', 'O', 'U'];
+        if ($nroIntento == 1) {
+            $puntajeIntento = 6;
+        } elseif ($nroIntento == 2) {
+            $puntajeIntento = 5;
+        } elseif ($nroIntento == 3) {
+            $puntajeIntento = 4;
+        } elseif ($nroIntento == 4) {
+            $puntajeIntento = 3;
+        } elseif ($nroIntento == 5) {
+            $puntajeIntento = 2;
+        } elseif ($nroIntento == 6) {
+            $puntajeIntento = 1;
         } else {
-            $puntajeLetra = $puntajeLetra + 3;
+            $puntajeIntento = 0;
         }
-    }
 
-    if ($puntajeIntento != 0) {
-        $puntaje = $puntajeIntento + $puntajeLetra;
-    } else {
-        $puntaje = 0;
-    }
+        for($i = 0 ; $i < strlen($palabra) ; $i++) {
+            $letra = $palabra[$i];
+            if (in_array($letra, $vocales)) {
+                $puntajeLetra = $puntajeLetra + 1;
+            } elseif ($letra>= 'A' && $letra <= 'M') {
+                $puntajeLetra = $puntajeLetra + 2;
+            } else {
+                $puntajeLetra = $puntajeLetra + 3;
+            }
+        }
 
-    
-    return $puntaje;
-}
+        if ($puntajeIntento != 0) {
+            $puntaje = $puntajeIntento + $puntajeLetra;
+        } else {
+            $puntaje = 0;
+        }
+
+        return $puntaje;
+    }
 
 /**
  * Dada una palabra para adivinar, juega una partida de wordix intentando que el usuario adivine la palabra.
