@@ -269,7 +269,7 @@ function resumenJugador ($partidas,$jugador){
                 $palabraSeleccionada[] = $num;
 
                 $partida = jugarWordix($palabras[$num], $usuario);
-                //$nuevasPartida = agregarPartida($partidas, $partida);        // preguntar
+                $partidas = agregarPartida($partidas, $partida);        
 
                 break;
             case 2:
@@ -277,13 +277,14 @@ function resumenJugador ($partidas,$jugador){
                 $aleatoria = rand(1, count($palabras));     // rand: algoritmo que obtiene un número aleatorio sin que se repita
                 $existe = existePalabra($palabras, $aleatoria);
 
-                while ($existe == true) { 
+                if ($existe == true) { 
                     echo "Ya utilizó todas las palabras. \n";
                 }
-
-                $partida = jugarWordix($palabras[$aleatoria], $usuario);
-                $nuevaPartida = agregarPartida($partidas, $partida);        // preguntar
-                print_r($nuevaPartida);
+                else {
+                    $partida = jugarWordix($palabras[$aleatoria], $usuario);
+                    $partidas = agregarPartida($partidas, $partida);        
+                    print_r($partidas);
+                }
 
                 break;
 
