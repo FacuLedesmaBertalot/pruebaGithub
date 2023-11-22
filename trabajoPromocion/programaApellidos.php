@@ -302,13 +302,14 @@ function resumenJugador($palabras, $usuario){
 
             case 5: 
                 // mostrarEstadisticas
-                    function mostrarEstadisticas(){
-                        echo "\nIngrese el nombre del jugador que desea observar sus estadisticas: ";
-                        $nombJugador=trim(fgets(STDIN));
-                        
-        
+                $nombJugador= solicitarJugador();
+                $listaPartidas= cargarPartidas(); 
+                $resumen= estadisticasJugador($listaPartidas, $nombJugador);
 
-                        }
+                print_r(mostrarResumen($resumen));
+
+                
+
 
                     
                     break;
