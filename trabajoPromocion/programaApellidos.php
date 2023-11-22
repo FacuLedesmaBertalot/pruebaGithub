@@ -274,7 +274,7 @@ function resumenJugador ($partidas,$jugador){
                 break;
             case 2:
                 $usuario = solicitarJugador();
-                $aleatoria = rand(1, count($palabras));     // rand: algoritmo que obtiene un número aleatorio sin que se repita
+                $aleatoria = rand(0, count($palabras));     // rand: algoritmo que obtiene un número aleatorio sin que se repita
                 $existe = existePalabra($palabras, $aleatoria);
 
                 if ($existe == true) { 
@@ -283,7 +283,7 @@ function resumenJugador ($partidas,$jugador){
                 else {
                     $partida = jugarWordix($palabras[$aleatoria], $usuario);
                     $partidas = agregarPartida($partidas, $partida);  
-                    print_r($partidas);
+                    print_r($partidas);     // quitar al final
                 }
 
                 break;
@@ -291,7 +291,7 @@ function resumenJugador ($partidas,$jugador){
             case 3:
                 $numSolicitado = solicitarNumeroEntre(1, count($partidas));
                 $mostrar = mostrarPartida($partidas, $numSolicitado);
-                print_r($mostrar);
+                print_r($mostrar);      // quitar al final
                 
                 break;
                 
@@ -304,7 +304,7 @@ function resumenJugador ($partidas,$jugador){
                     echo "El jugador ". $jugador . " no ganó ninguna partida. \n";
                 } else {
                     $mostrar = mostrarPartida($partidas, $primerPartidaGanada);
-                    print_r($mostrar);
+                    print_r($mostrar);      // quitar al final
                 }
                 break;
 
@@ -331,7 +331,7 @@ function resumenJugador ($partidas,$jugador){
                 foreach($resumen as $indice=> $elemento) {
                     echo "$indice = $elemento\n";
                 }
-                print_r($resumen); // print_r: muestra información sobre una variable en una forma que es legible por humanos.
+                print_r($resumen); // quitar al final
                 break;
 
             case 7:
