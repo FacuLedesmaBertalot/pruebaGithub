@@ -181,13 +181,25 @@ function existePalabra ($coleccionPalabras, $palabra){
 function agregarPalabra ($coleccionPalabras, $palabra){
 // INT $nuevaPosicion
 
-$nuevaPosicion=count($coleccionPalabras)+1;
+$nuevaPosicion=count($coleccionPalabras);
 $coleccionPalabras[$nuevaPosicion]=$palabra;
 
 return $coleccionPalabras;
 
 }
 
+
+/** Agrega una partida que se jugó al arreglo
+ * @param array $coleccionPartidas
+ * @param array $nuevaPartida
+ * @return array
+ */
+function agregarPartida($coleccionPartidas, $nuevaPartida) {
+
+    $coleccionPartidas[] = $nuevaPartida;
+
+    return $coleccionPartidas;
+}
 
 function estadisticasJugador ($partidas, $jugador){
     
@@ -252,14 +264,16 @@ function resumenJugador($palabras, $usuario){
 
     $palabras = cargarColeccionPalabras();
     $partidas = cargarPartidas();
-    $usuario = solicitarJugador();
-   escribirMensajeBienvenida($usuario);
-   $palabraSeleccionada = [];
+    $usuario = solicitarJugador(); // preguntar si es necesario llamar a la función acá
+    escribirMensajeBienvenida($usuario);
+    $palabraSeleccionada = [];
+
 
     do {
         $opcion = seleccionarOpcion();
         switch ($opcion) {
             case 1: 
+                $usuario = solicitarJugador();
                 echo "Elija el número de la palabra que desea seleccionar: \n";
                 print_r($palabras);
                 
@@ -274,15 +288,29 @@ function resumenJugador($palabras, $usuario){
                 $palabraSeleccionada[] = $num;
 
                 $partida = jugarWordix($palabras[$num], $usuario);
+                $partidas = agregarPartida($partidas, $partida);  
+
                 break;
             case 2:
-                $partida = jugarWordix($palabras, $usuario);    // $palabraAleatoria = $coleccionPalabras[array_rand($coleccionPalabras)];
+                $usuario = solicitarJugador();
+                $aleatoria = rand(0, count($palabras));     // rand: algoritmo que obtiene un número aleatorio sin que se repita
+                $existe = existePalabra($palabras, $aleatoria);
+
+                if ($existe == true) { 
+                    echo "Ya utilizó todas las palabras. \n";
+                }
+                else {
+                    $partida = jugarWordix($palabras[$aleatoria], $usuario);
+                    $partidas = agregarPartida($partidas, $partida);  
+                    print_r($partidas);     // quitar al final
+                }
+
                 break;
 
             case 3:
                 $numSolicitado = solicitarNumeroEntre(1, count($partidas));
                 $mostrar = mostrarPartida($partidas, $numSolicitado);
-                print_r($mostrar);
+                print_r($mostrar);      // quitar al final
                 
                 break;
                 
@@ -295,7 +323,7 @@ function resumenJugador($palabras, $usuario){
                     echo "El jugador ". $jugador . " no ganó ninguna partida. \n";
                 } else {
                     $mostrar = mostrarPartida($partidas, $primerPartidaGanada);
-                    print_r($mostrar);
+                    print_r($mostrar);      // quitar al final
                 }
                 break;
 
@@ -325,8 +353,8 @@ function resumenJugador($palabras, $usuario){
                 foreach($resumen as $indice=> $elemento) {
                     echo "$indice = $elemento\n";
                 }
-                print_r($resumen); // print_r: muestra información sobre una variable en una forma que es legible por humanos.
-                           break;
+                print_r($resumen); // quitar al final
+                break;
 
             case 7:
                 //agrega nueva palabra a la coleccion
@@ -334,7 +362,7 @@ function resumenJugador($palabras, $usuario){
                 $nuevaPalabra= leerPalabra5Letras();
                 $existe=existePalabra($palabras,$nuevaPalabra);
                 if ($existe==true){
-                    echo "la palabra ya se encuentra en la lista   \n";
+                    echo "La palabra ya se encuentra en la lista.\n";
                 }else{
                     $palabras=agregarPalabra($palabras,$nuevaPalabra);
                 }
