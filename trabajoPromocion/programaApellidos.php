@@ -190,6 +190,18 @@ return $coleccionPalabras;
 
 }
 
+/** Agrega una partida que se jugó al arreglo
+ * @param array $coleccionPartidas
+ * @param array $nuevaPartida
+ * @return array
+ */
+function agregarPartida($coleccionPartidas, $nuevaPartida) {
+
+    $coleccionPartidas[] = $nuevaPartida;
+
+    return $coleccionPartidas;
+}
+
 
 /**
  * 
@@ -237,6 +249,7 @@ function resumenJugador ($partidas,$jugador){
     escribirMensajeBienvenida($usuario);
     $palabraSeleccionada = [];
 
+
     do {
         $opcion = seleccionarOpcion();
         switch ($opcion) {
@@ -255,9 +268,21 @@ function resumenJugador ($partidas,$jugador){
                 $palabraSeleccionada[] = $num;
 
                 $partida = jugarWordix($palabras[$num], $usuario);
+                //$nuevasPartida = agregarPartida($partidas, $partida);        // preguntar
+
                 break;
             case 2:
-                $partida = jugarWordix($palabras, $usuario);    // $palabraAleatoria = $coleccionPalabras[array_rand($coleccionPalabras)];
+
+                $aleatoria = rand(1, count($palabras));     // rand: algoritmo que obtiene un número aleatorio sin que se repita
+                $existe = existePalabra($palabras, $aleatoria);
+
+                while ($existe == true) { 
+                    echo "Ya utilizó todas las palabras. \n";
+                }
+
+                $partida = jugarWordix($palabras[$aleatoria], $usuario);
+                //$nuevasPartida = agregarPartida($partidas, $partida);        // preguntar
+
                 break;
 
             case 3:
