@@ -103,7 +103,6 @@ function mostrarPartida($numPartidas, $num) {  // * recorrido parcial * //
         }
     }
 
-    
 
 /** Dada una colección de partidas retorna el índice de la primer partida ganada, y si no ganó ninguna retorna el valor -1
  * @param array $partidas
@@ -194,24 +193,40 @@ return $coleccionPalabras;
 }
 
 
-/**
- * 
- */
-function resumenJugador ($partidas,$jugador){
+function estadisticasJugador ($partidas, $jugador){
     
-    $cant=count($cargarPartidas);
-    for ($i=0; $i<$cant;$i++);
-        if ($partidas[$i]["jugador"] == $jugador){
-
+    $puntajeTotal=0;
+    $partidasJugadas = 0;
+    foreach ($partidas as $partida) {
+        if ($partida["jugador"] == $jugador){
+            $partidasJugadas=$partidasJugadas+1;
+            $puntajeTotal=$puntajeTotal+$partida["puntaje"];
+            if ($partida["puntaje"] > 0){
+                
+            }
         }
+    }
     $resumen = [
-        'jugador' => $jugador, 'partidas'=> $partidas, 'puntaje' => $puntaje, 'victorias'=> $victorias,
-        'intento1' => $intento1, 'intento2' => $intento2, 'intento3' => $intento3, 'intento4' => $intento4, 
-        'intento5' => $intento5, 'intento6' => $intento6
+        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal
     ];
-
+    return $resumen;
 }
 
+
+
+    function mostrarResumen($resumen) {  
+        echo "***************************************************\n";
+        echo "Jugador: ". $resumen["jugador"] . "\n";
+        echo "Partidas: ". $resumen["partidas"] . "\n";
+        echo "***************************************************\n";
+    }
+
+
+
+//TODO
+function resumenJugador($palabras, $usuario){
+
+}
 
 /* ****COMPLETAR***** */
 
@@ -229,15 +244,15 @@ function resumenJugador ($partidas,$jugador){
 
 //Proceso:
 
-$partida = jugarWordix("MELON", strtolower("MaJo"));
-print_r($partida);
+//$partida = jugarWordix("MELON", strtolower("MaJo"));
+//print_r($partida);
 //imprimirResultado($partida);
 
 
     $palabras = cargarColeccionPalabras();
     $partidas = cargarPartidas();
     $usuario = solicitarJugador();
-    escribirMensajeBienvenida($usuario);
+   // escribirMensajeBienvenida($usuario);
 
 
     do {
@@ -273,17 +288,18 @@ print_r($partida);
 
             case 5: 
                 // mostrarEstadisticas
-                    function mostrarEstadisticas(){
-                        echo "\nIngrese el nombre del jugador que desea observar sus estadisticas: ";
-                        $nombJugador=trim(fgets(STDIN));
+    
+                        $nombJugador= solicitarJugador();
+                        $listaPartidas= cargarPartidas(); 
+                        $resumen= estadisticasJugador($listaPartidas, $nombJugador);
+
+                        print_r(mostrarResumen($resumen));
+
                         
-        
 
-                        }
-
-                    }
-                    break;
                     
+                    break;
+
             case 6:
                 // mostrarResumenJugador
                 $resumen = [
@@ -291,7 +307,7 @@ print_r($partida);
                     'intento1' => $intento1, 'intento2' => $intento2, 'intento3' => $intento3, 'intento4' => $intento4, 
                     'intento5' => $intento5, 'intento6' => $intento6
                 ];
-                uasort($resumen, resumenJugador($palabras, $usuario)); //uasort: ordena los elementos usando una función de comparación definida por el usuario
+                //uasort($resumen, resumenJugador($palabras, $usuario)); //uasort: ordena los elementos usando una función de comparación definida por el usuario
                 foreach($resumen as $indice=> $elemento) {
                     echo "$indice = $elemento\n";
                 }
