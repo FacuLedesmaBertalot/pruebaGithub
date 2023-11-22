@@ -183,7 +183,7 @@ function existePalabra ($coleccionPalabras, $palabra){
 function agregarPalabra ($coleccionPalabras, $palabra){
 // INT $nuevaPosicion
 
-$nuevaPosicion=count($coleccionPalabras)+1;
+$nuevaPosicion=count($coleccionPalabras);
 $coleccionPalabras[$nuevaPosicion]=$palabra;
 
 return $coleccionPalabras;
@@ -269,7 +269,7 @@ function resumenJugador ($partidas,$jugador){
                 $palabraSeleccionada[] = $num;
 
                 $partida = jugarWordix($palabras[$num], $usuario);
-                $partidas = agregarPartida($partidas, $partida);        
+                $partidas = agregarPartida($partidas, $partida);  
 
                 break;
             case 2:
@@ -282,7 +282,7 @@ function resumenJugador ($partidas,$jugador){
                 }
                 else {
                     $partida = jugarWordix($palabras[$aleatoria], $usuario);
-                    $partidas = agregarPartida($partidas, $partida);        
+                    $partidas = agregarPartida($partidas, $partida);  
                     print_r($partidas);
                 }
 
@@ -340,7 +340,7 @@ function resumenJugador ($partidas,$jugador){
                 $nuevaPalabra= leerPalabra5Letras();
                 $existe=existePalabra($palabras,$nuevaPalabra);
                 if ($existe==true){
-                    echo "la palabra ya se encuentra en la lista   \n";
+                    echo "La palabra ya se encuentra en la lista.\n";
                 }else{
                     $palabras=agregarPalabra($palabras,$nuevaPalabra);
                 }

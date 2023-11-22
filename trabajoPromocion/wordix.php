@@ -336,7 +336,7 @@ function obtenerPuntajeWordix($nroIntento, $teclado)  /* ****COMPLETAR***** par√
     // int $puntajeIntento, $puntajeTeclado, $puntaje
 
     $puntajeTeclado = 0;
-    $vocales = ['a', 'e', 'i', 'o', 'u'];
+    $vocales = ['A', 'E', 'I', 'O', 'U'];
     if ($nroIntento == 1) {
         $puntajeIntento = 6;
     } elseif ($nroIntento == 2) {
@@ -353,12 +353,12 @@ function obtenerPuntajeWordix($nroIntento, $teclado)  /* ****COMPLETAR***** par√
         $puntajeIntento = 0;
     }
 
-    foreach ($teclado as $teclado) {
-        if (in_array($teclado, $vocales)) {
+    foreach ($teclado as $letra) {
+        if (in_array($letra, $vocales)) {
             $puntajeTeclado = $puntajeTeclado + 1;
-        } elseif ($teclado <= "M" && !$vocales) {
+        } elseif ($letra <= "M" && !$vocales) {
             $puntajeTeclado = $puntajeTeclado + 2;
-        } elseif ($teclado <= "M" && !$vocales) {
+        } elseif ($letra <= "M" && !$vocales) {
             $puntajeTeclado = $puntajeTeclado + 3;
         }
     }
