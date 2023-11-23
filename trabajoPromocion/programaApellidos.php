@@ -134,18 +134,22 @@ function primerPartidaGanada($partidas, $nombre) {
 
 
 /** Función que solicita el nombre del jugador
- * @return string
+ * @return bool
  */
 function solicitarJugador() {
-    // string $usuario
+    // bool $usuario
+
+    $usuario = true;
     echo "Nombre del Jugador: ";
     $usuario = trim(fgets(STDIN));
 
-    if (ctype_alpha($usuario)) {
-        return strtolower($usuario);
-    } else {
+    while (ctype_alpha($usuario) == false) {
         echo "Por favor, ingrese un nombre válido que comience con una letra: \n";
+        echo "Nombre del Jugador: ";
+        $usuario = trim(fgets(STDIN));
     }
+    return strtolower($usuario);     
+    
 }
 
 /**
