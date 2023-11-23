@@ -5,7 +5,7 @@ include_once("wordix.php");
 
 /**************************************/
 /***** DATOS DE LOS INTEGRANTES *******/
-// Facundo Ledesma
+// Ledesma, Facundo Nehuen. FAI - 4238. Tecnicatura en Desarrollo Web. faculedesmabertalot@gmail.com . FacuLedesmaBertalot
 
 /* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github */
 /* ****COMPLETAR***** */
@@ -162,13 +162,13 @@ function existePalabra ($coleccionPalabras, $palabra){
     //BOOLEAN $encontrada
     // INT $i, $cant
     
-    $encontrada= false;
-    $i=0;
-    $cant=count($coleccionPalabras);
-    while ($i<$cant  &&  !$encontrada){
+    $encontrada = false;
+    $i = 0;
+    $cant = count($coleccionPalabras);
+    while ($i < $cant  &&  !$encontrada){
      
-        if ($coleccionPalabras[$i]==$palabra){
-            $encontrada=true;
+        if ($coleccionPalabras[$i] == $palabra){
+            $encontrada = true;
         }
         $i++;
     }
@@ -185,8 +185,8 @@ function existePalabra ($coleccionPalabras, $palabra){
 function agregarPalabra ($coleccionPalabras, $palabra){
 // INT $nuevaPosicion
 
-$nuevaPosicion=count($coleccionPalabras);
-$coleccionPalabras[$nuevaPosicion]=$palabra;
+$nuevaPosicion = count($coleccionPalabras);
+$coleccionPalabras[$nuevaPosicion] = $palabra;
 
 return $coleccionPalabras;
 
@@ -424,12 +424,12 @@ function resumenJugador($palabras, $usuario){
             case 7:
                 //agrega nueva palabra a la coleccion
               
-                $nuevaPalabra= leerPalabra5Letras();
-                $existe=existePalabra($palabras,$nuevaPalabra);
-                if ($existe==true){
+                $nuevaPalabra = leerPalabra5Letras();
+                $existe = existePalabra($palabras,$nuevaPalabra);
+                if ($existe == true){
                     echo "La palabra ya se encuentra en la lista.\n";
-                }else{
-                    $palabras=agregarPalabra($palabras,$nuevaPalabra);
+                }else {
+                    $palabras = agregarPalabra($palabras,$nuevaPalabra);
                 }
               print_r($palabras);
                 break;
@@ -439,6 +439,6 @@ function resumenJugador($palabras, $usuario){
                 exit;
 
     }
-}while ($opcion != 0);
+} while ($opcion != 0);
 
 ?>
