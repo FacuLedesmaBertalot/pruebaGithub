@@ -201,12 +201,20 @@ function agregarPartida($coleccionPartidas, $nuevaPartida) {
     return $coleccionPartidas;
 }
 
-function estadisticasJugador ($partidas, $jugador){
+function estadisticasJugador ($partidas , $jugador){
     
+    $numeroint=$partidas["intentos"];
     
+    $intento1=0;
+    $intento2=0;
+    $intento3=0;
+    $intento4=0;
+    $intento5=0;
+    $intento6=0;
     $victoriaJugador=0;
     $puntajeTotal=0;
     $partidasJugadas = 0;
+
     foreach ($partidas as $partida) {
         if ($partida["jugador"] == $jugador){
             $partidasJugadas=$partidasJugadas+1;
@@ -215,10 +223,14 @@ function estadisticasJugador ($partidas, $jugador){
                 $victoriaJugador = $victoriaJugador+1;
             }
             $porcentajeVictorias= ($victoriaJugador*100)/$partidasJugadas;
+            $intentoSS =obtenerPuntajeIntento($numeroint);
+
         }
     }
     $resumen = [
-        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,'porcentaje victorias' => $victoriaJugador,
+        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,'porcentaje victorias' => $victoriaJugador,'adivinadas: '=> $partidasJugadas,
+        'intento1' => $intento1, 'intento2' => $intento2, 'intento3' => $intento3, 'intento4' => $intento4, 
+        'intento5' => $intento5, 'intento6' => $intento6
     ];
     return $resumen;
 }
@@ -230,9 +242,58 @@ function estadisticasJugador ($partidas, $jugador){
         echo "Puntaje: ". $resumen["puntaje"] . "\n";
         echo "Victorias: ". $resumen["victorias"] . "\n";
         echo "Porcentaje victorias: ". $resumen["victorias"] . "\n";
+        echo "Intento 1: ". $resumen["intento1"];
         echo "***************************************************\n";
     }
 
+
+    /** Calcula el puntaje obtenido del jugador
+ * @param int $nroIntento
+ * @param string $palabra
+ * @return array
+ * 
+ */
+function obtenerPuntajeIntento($nroIntento) 
+{   // 
+    // int $puntajeIntento
+ 
+    if ($nroIntento == 1) {
+        $puntajeIntento = 6;
+        $intento=[];
+        $intento[0]=[$puntajeIntento];
+        $intento[1]=[0];
+        $intento[2]=[0];
+        $intento[3]=0;
+        $intento[5]=0;
+        $intento[6]=0;
+    } elseif ($nroIntento == 2) {
+        $puntajeIntento = 5;
+        $intento=[];
+        $intento[0]=[$puntajeIntento];
+        $intento[1]=[0];
+        $intento[2]=[0];
+        $intento[3]=[0];
+        $intento[5]=[0];
+        $intento[6]=[0];
+    } elseif ($nroIntento == 3) {
+        $puntajeIntento = 4;
+        
+    } elseif ($nroIntento == 4) {
+        $puntajeIntento = 3;
+       
+    } elseif ($nroIntento == 5) {
+        $puntajeIntento = 2;
+       
+    } elseif ($nroIntento == 6) {
+        $puntajeIntento = 1;
+       
+    } else {
+        $puntajeIntento = 0;
+    }
+
+return $intento;
+
+}
 
 
 //TODO
