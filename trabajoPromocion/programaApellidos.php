@@ -86,13 +86,13 @@ function seleccionarOpcion() {
  */
 function mostrarPartida($numPartidas, $num) {  // * recorrido parcial * // 
     // int $numPartida, $n, $i
-    $n = count($numPartidas);
-    $i = $num - 1;
+        $i = $num - 1;
 
         echo "***************************************************\n";
         echo "Partida WORDIX ". $num . ": palabra ". $numPartidas[$i]["palabraWordix"] . "\n";
         echo "Jugador: ". $numPartidas[$i]["jugador"] ."\n";
         echo "Puntaje: ". $numPartidas[$i]["puntaje"] . " puntos\n";
+        
         if ($numPartidas[$i]["intentos"] != 6) {
             echo "Adivinó la palabra en ". $numPartidas[$i]["intentos"] ." intentos.\n";
              echo "***************************************************\n";
