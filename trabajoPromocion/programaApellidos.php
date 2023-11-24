@@ -154,9 +154,9 @@ function solicitarJugador() {
 
 /**
  * Funcion que retorna falso si la palabra no se encuentra en la lista y verdadero si dicha palabra se encuentra
- * @param ARRAY $coleccionPalabras
- * @param STRING $palabra
- * @return BOOLEAN
+ * @param array $coleccionPalabras
+ * @param string $palabra
+ * @return boolean
  */
 function existePalabra ($coleccionPalabras, $palabra){
     //BOOLEAN $encontrada
@@ -178,9 +178,9 @@ function existePalabra ($coleccionPalabras, $palabra){
 
 
 /** Agrega una palabra nueva al arreglo de la colección de palabras
- * @param ARRAY $coleccionPalabras
- * @param STRING $palabra
- * @return ARRAY
+ * @param array $coleccionPalabras
+ * @param string $palabra
+ * @return array
 */
 function agregarPalabra ($coleccionPalabras, $palabra){
 // INT $nuevaPosicion
@@ -205,107 +205,90 @@ function agregarPartida($coleccionPartidas, $nuevaPartida) {
     return $coleccionPartidas;
 }
 
-function estadisticasJugador ($partidas , $jugador){
-    
-    $numeroint=$partidas["intentos"];
-    
-    $intento1=0;
-    $intento2=0;
-    $intento3=0;
-    $intento4=0;
-    $intento5=0;
-    $intento6=0;
-    $victoriaJugador=0;
-    $puntajeTotal=0;
+
+
+/** Almacena las estadísticas del jugador
+ * @param array $partidas
+ * @param string $jugador
+ * @return array
+ */
+function estadisticasJugador($partidas , $jugador){
+
+    $intento1 = 0;
+    $intento2 = 0;
+    $intento3 = 0;
+    $intento4 = 0;
+    $intento5 = 0;
+    $intento6 = 0;
+    $victoriaJugador = 0;
+    $puntajeTotal = 0;
     $partidasJugadas = 0;
 
     foreach ($partidas as $partida) {
-        if ($partida["jugador"] == $jugador){
-            $partidasJugadas=$partidasJugadas+1;
-            $puntajeTotal=$puntajeTotal+$partida["puntaje"];
-            if ($partida["puntaje"] > 0){
-                $victoriaJugador = $victoriaJugador+1;
-            }
-            $porcentajeVictorias= ($victoriaJugador*100)/$partidasJugadas;
-            $intentoSS =obtenerPuntajeIntento($numeroint);
 
+        if ($partida["jugador"] == $jugador){
+            $partidasJugadas = $partidasJugadas + 1;
+            $puntajeTotal = $puntajeTotal + $partida["puntaje"];
+            
+            if ($partida["puntaje"] > 0){
+                $victoriaJugador = $victoriaJugador + 1;
+            }
+
+            $porcVictoria = ($victoriaJugador * 100) / $partidasJugadas;
+
+            $numeroInt = $partida["intentos"];
+
+            for ($i = 1 ; $i <= $partidasJugadas ; $i++) {
+                if ($numeroInt == 1) {
+                    $intento1 = $intento1 + 1;
+                } elseif ($numeroInt == 2) {
+                    $intento2 = $intento2 + 1;
+                } elseif ($numeroInt == 3) {
+                    $intento3 = $intento3 + 1;
+                } elseif ($numeroInt == 4) {
+                    $intento4 = $intento4 + 1;
+                } elseif ($numeroInt == 5) {
+                    $intento5 = $intento5 + 1;
+                } elseif ($numeroInt == 6) {
+                    $intento6 = $intento6 + 1;
+                }
+            
+            }
+        
         }
+    
     }
+    
     $resumen = [
-        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,'porcentaje victorias' => $victoriaJugador,'adivinadas: '=> $partidasJugadas,
-        'intento1' => $intento1, 'intento2' => $intento2, 'intento3' => $intento3, 'intento4' => $intento4, 
-        'intento5' => $intento5, 'intento6' => $intento6
+        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,
+        'porcentaje victorias' => $porcVictoria, 'intento1' => $intento1, 'intento2' => $intento2, 'intento3' => $intento3,
+        'intento4' => $intento4, 'intento5' => $intento5, 'intento6' => $intento6
     ];
     return $resumen;
+
 }
 
-    function mostrarResumen($resumen) {  
+
+/** Muestra el resumen de un jugador de una forma legible para el usuario
+ * @param array $resumen
+ * @return string
+ */
+function mostrarResumen($resumen) {  
         echo "***************************************************\n";
         echo "Jugador: ". $resumen["jugador"] . "\n";
         echo "Partidas: ". $resumen["partidas"] . "\n";
-        echo "Puntaje: ". $resumen["puntaje"] . "\n";
+        echo "Puntaje Total: ". $resumen["puntaje"] . "\n";
         echo "Victorias: ". $resumen["victorias"] . "\n";
-        echo "Porcentaje victorias: ". $resumen["victorias"] . "\n";
-        echo "Intento 1: ". $resumen["intento1"];
+        echo "Porcentaje victorias: ". (int)$resumen['porcentaje victorias'] . "%.\n";
+        echo "Adivinadas: \n";
+        echo "  Intento 1: ". $resumen['intento1'] . "\n";
+        echo "  Intento 2: ". $resumen['intento2'] . "\n";
+        echo "  Intento 3: ". $resumen['intento3'] . "\n";
+        echo "  Intento 4: ". $resumen['intento4'] . "\n";
+        echo "  Intento 5: ". $resumen['intento5'] . "\n";
+        echo "  Intento 6: ". $resumen['intento6'] . "\n";
         echo "***************************************************\n";
     }
-
-
-    /** Calcula el puntaje obtenido del jugador
- * @param int $nroIntento
- * @param string $palabra
- * @return array
- * 
- */
-function obtenerPuntajeIntento($nroIntento) 
-{   // 
-    // int $puntajeIntento
- 
-    if ($nroIntento == 1) {
-        $puntajeIntento = 6;
-        $intento=[];
-        $intento[0]=[$puntajeIntento];
-        $intento[1]=[0];
-        $intento[2]=[0];
-        $intento[3]=0;
-        $intento[5]=0;
-        $intento[6]=0;
-    } elseif ($nroIntento == 2) {
-        $puntajeIntento = 5;
-        $intento=[];
-        $intento[0]=[$puntajeIntento];
-        $intento[1]=[0];
-        $intento[2]=[0];
-        $intento[3]=[0];
-        $intento[5]=[0];
-        $intento[6]=[0];
-    } elseif ($nroIntento == 3) {
-        $puntajeIntento = 4;
-        
-    } elseif ($nroIntento == 4) {
-        $puntajeIntento = 3;
-       
-    } elseif ($nroIntento == 5) {
-        $puntajeIntento = 2;
-       
-    } elseif ($nroIntento == 6) {
-        $puntajeIntento = 1;
-       
-    } else {
-        $puntajeIntento = 0;
-    }
-
-return $intento;
-
-}
-
-
-//TODO
-function resumenJugador($palabras, $usuario){
-
-}
-
-/* ****COMPLETAR***** */
 
 
 
@@ -395,9 +378,8 @@ function resumenJugador($palabras, $usuario){
 
             case 5: 
                 // mostrarEstadisticas
-                $nombJugador= solicitarJugador();
-                $listaPartidas= cargarPartidas(); 
-                $resumen= estadisticasJugador($listaPartidas, $nombJugador);
+                $usuario= solicitarJugador();
+                $resumen = estadisticasJugador($partidas, $usuario);
 
                 print_r(mostrarResumen($resumen));
 
@@ -408,17 +390,12 @@ function resumenJugador($palabras, $usuario){
                     break;
 
             case 6:
-                // mostrarResumenJugador
-                $resumen = [
-                    'jugador' => $jugador, 'partidas'=> $partidas, 'puntaje' => $puntaje, 'victorias'=> $victorias,
-                    'intento1' => $intento1, 'intento2' => $intento2, 'intento3' => $intento3, 'intento4' => $intento4, 
-                    'intento5' => $intento5, 'intento6' => $intento6
-                ];
-                //uasort($resumen, resumenJugador($palabras, $usuario)); //uasort: ordena los elementos usando una función de comparación definida por el usuario
-                foreach($resumen as $indice=> $elemento) {
-                    echo "$indice = $elemento\n";
-                }
-                print_r($resumen); // quitar al final
+                // mostrarListaOrdenada
+                // //uasort($resumen, resumenJugador($palabras, $usuario)); //uasort: ordena los elementos usando una función de comparación definida por el usuario
+                // foreach($resumen as $indice=> $elemento) {
+                //     echo "$indice = $elemento\n";
+                // }
+                // print_r($resumen); // quitar al final
                 break;
 
             case 7:
