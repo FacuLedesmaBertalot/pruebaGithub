@@ -212,7 +212,7 @@ function agregarPartida($coleccionPartidas, $nuevaPartida) {
  * @param string $jugador
  * @return array
  */
-function estadisticasJugador($partidas , $jugador){
+function estadisticasJugador($partidas, $jugador){
 
     $intento1 = 0;
     $intento2 = 0;
@@ -238,7 +238,7 @@ function estadisticasJugador($partidas , $jugador){
 
             $numeroInt = $partida["intentos"];
 
-            for ($i = 1 ; $i <= $partidasJugadas ; $i++) {
+            for ($i = 1 ; $i < $partidasJugadas ; $i++) {
                 if ($numeroInt == 1) {
                     $intento1 = $intento1 + 1;
                 } elseif ($numeroInt == 2) {
@@ -249,7 +249,7 @@ function estadisticasJugador($partidas , $jugador){
                     $intento4 = $intento4 + 1;
                 } elseif ($numeroInt == 5) {
                     $intento5 = $intento5 + 1;
-                } elseif ($numeroInt == 6) {
+                } elseif (($numeroInt == 6) && ($partida["puntaje"] != 0)) {
                     $intento6 = $intento6 + 1;
                 }
             
