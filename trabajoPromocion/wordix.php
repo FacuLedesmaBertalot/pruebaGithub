@@ -333,7 +333,7 @@ function esIntentoGanado($estructuraPalabraIntento)
  */
 function obtenerPuntajeWordix($nroIntento, $palabra) 
     {   // array $vocales
-        // int $puntajeIntento, $puntajeTeclado, $puntaje
+        // int $puntajeIntento, $puntajeLetra, $puntaje
 
         $puntajeLetra = 0;
         $vocales = ['A', 'E', 'I', 'O', 'U'];
