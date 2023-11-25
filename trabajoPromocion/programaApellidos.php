@@ -224,7 +224,7 @@ function estadisticasJugador($partidas, $jugador){
     $puntajeTotal = 0;
     $partidasJugadas = 0;
     $i=0;
-    $nroIntento=$partidas[$i]["intentos"];
+   
 
     foreach ($partidas as $partida) {
 
@@ -262,7 +262,7 @@ function estadisticasJugador($partidas, $jugador){
     }
     
     $resumen = [
-        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,'porcentajeVictorias' => $nroResumido,'adivinadas: '=> $partidasJugadas,
+        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,'porcentajeVictorias' => $porcVictoria,'adivinadas: '=> $partidasJugadas,
         'intento1' => $intento1, 'intento2' => $intento2, 'intento3' => $intento3, 'intento4' => $intento4, 
         'intento5' => $intento5, 'intento6' => $intento6
     ];
@@ -281,14 +281,14 @@ function mostrarResumen($resumen) {
         echo "Partidas: ". $resumen["partidas"] . "\n";
         echo "Puntaje Total: ". $resumen["puntaje"] . "\n";
         echo "Victorias: ". $resumen["victorias"] . "\n";
-        echo "Porcentaje victorias: ". (int)$resumen['porcentaje victorias'] . "%.\n";
+        echo "Porcentaje victorias: ". (int)$resumen['porcentajeVictorias'] . "%.\n";
         echo "Adivinadas: \n";
-        echo "  Intento 1: ". $resumen['intento1'] . "\n";
-        echo "  Intento 2: ". $resumen['intento2'] . "\n";
-        echo "  Intento 3: ". $resumen['intento3'] . "\n";
-        echo "  Intento 4: ". $resumen['intento4'] . "\n";
-        echo "  Intento 5: ". $resumen['intento5'] . "\n";
-        echo "  Intento 6: ". $resumen['intento6'] . "\n";
+        echo "      Intento 1: ". $resumen['intento1'] . "\n";
+        echo "      Intento 2: ". $resumen['intento2'] . "\n";
+        echo "      Intento 3: ". $resumen['intento3'] . "\n";
+        echo "      Intento 4: ". $resumen['intento4'] . "\n";
+        echo "      Intento 5: ". $resumen['intento5'] . "\n";
+        echo "      Intento 6: ". $resumen['intento6'] . "\n";
         echo "***************************************************\n";
     }
 
@@ -298,8 +298,11 @@ function mostrarResumen($resumen) {
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
 
-//Declaración de variables:
-
+/**Declaración de variables:
+ARRAY $palabras, $partidas, $palabraSeleccionada, $partida, $resumen
+INT $opcion, $aleatoria
+STRING $num, $numSolicitado, $mostrar, $nuevaPalabra
+BOOL $usuario, $existe
 
 //Inicialización de variables:
 
@@ -310,7 +313,7 @@ function mostrarResumen($resumen) {
 //print_r($partida);
 
 //imprimirResultado($partida);
-
+*/
 
     $palabras = cargarColeccionPalabras();
     $partidas = cargarPartidas();
@@ -341,6 +344,7 @@ function mostrarResumen($resumen) {
                 $partidas = agregarPartida($partidas, $partida);  
 
                 break;
+                
             case 2:
                 $usuario = solicitarJugador();
                 $aleatoria = rand(0, count($palabras));     // rand: algoritmo que obtiene un número aleatorio sin que se repita
