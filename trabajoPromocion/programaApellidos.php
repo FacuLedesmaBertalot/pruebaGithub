@@ -353,7 +353,7 @@ BOOL $usuario, $existe
                 $partidas = agregarPartida($partidas, $partida);  
 
                 break;
-                
+
             case 2:
                 $usuario = solicitarJugador();
                 $aleatoria = rand(0, count($palabras));     // rand: algoritmo que obtiene un número aleatorio sin que se repita
@@ -402,12 +402,12 @@ BOOL $usuario, $existe
 
             case 6:
                 // mostrarListaOrdenada
-                // //uasort($resumen, resumenJugador($palabras, $usuario)); //uasort: ordena los elementos usando una función de comparación definida por el usuario
-                // foreach($resumen as $indice=> $elemento) {
-                //     echo "$indice = $elemento\n";
-                // }
-                // print_r($resumen); // quitar al final
-                break;
+               // uasort($resumen, Jugador($palabras, $usuario)); //uasort: ordena los elementos usando una función de comparación definida por el usuario
+                //foreach($resumen as $indice=> $elemento) {
+                    echo "$indice = $elemento\n";
+                //}
+               // print_r($resumen); // quitar al final
+               // break;
 
             case 7:
                 //agrega nueva palabra a la coleccion
