@@ -226,7 +226,7 @@ function estadisticasJugador($partidas, $jugador){
     $i=0;
    
 
-    foreach ($partidas as $partida) {
+    foreach ($partidas as $partida) {  
 
         if ($partida["jugador"] == $jugador){
             $partidasJugadas = $partidasJugadas + 1;
@@ -240,26 +240,35 @@ function estadisticasJugador($partidas, $jugador){
 
             $numeroInt = $partida["intentos"];
 
-            for ($i = 1 ; $i < $partidasJugadas ; $i++) {
+            while ($numeroInt > 0){
+
                 if ($numeroInt == 1) {
                     $intento1 = $intento1 + 1;
-                } elseif ($numeroInt == 2) {
-                    $intento2 = $intento2 + 1;
-                } elseif ($numeroInt == 3) {
-                    $intento3 = $intento3 + 1;
-                } elseif ($numeroInt == 4) {
-                    $intento4 = $intento4 + 1;
-                } elseif ($numeroInt == 5) {
-                    $intento5 = $intento5 + 1;
-                } elseif (($numeroInt == 6) && ($partida["puntaje"] != 0)) {
-                    $intento6 = $intento6 + 1;
                 }
-            
-            }
-        
+
+                elseif ($numeroInt == 2) {
+                    $intento2 = $intento2 + 1;
+                }
+
+                elseif ($numeroInt == 3) {
+                    $intento3 = $intento3 + 1;
+                }
+
+                elseif ($numeroInt == 4) {
+                        $intento4 = $intento4 + 1;
+                }
+                 
+                elseif ($numeroInt == 5) {
+                        $intento5 = $intento5 + 1;
+                }
+
+                elseif ($numeroInt == 6 && $partida["puntaje"]> 0) {
+                        $intento6 = $intento6 + 1;         
+                } 
+                break;
         }
-    
     }
+ }
     
     $resumen = [
         'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,'porcentajeVictorias' => $porcVictoria,'adivinadas: '=> $partidasJugadas,
