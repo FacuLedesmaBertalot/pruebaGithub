@@ -271,7 +271,8 @@ function estadisticasJugador($partidas, $jugador){
  }
     
     $resumen = [
-        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,'porcentajeVictorias' => $porcVictoria,'adivinadas: '=> $partidasJugadas,
+        'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,
+        'porcentajeVictorias' => $porcVictoria,'adivinadas: '=> $partidasJugadas,
         'intento1' => $intento1, 'intento2' => $intento2, 'intento3' => $intento3, 'intento4' => $intento4, 
         'intento5' => $intento5, 'intento6' => $intento6
     ];
