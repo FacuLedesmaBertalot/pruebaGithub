@@ -303,6 +303,16 @@ function mostrarResumen($resumen) {
     }
 
 
+    function compararJugadorPartida($a, $b) {
+        $cmp = strcmp($a['jugador'], $b['jugador']);
+        
+        if ($cmp == 0) {
+          $cmp = strcmp($a['palabraWordix'], $b['palabraWordix']);
+        }
+        
+      return$cmp;
+    }
+
 
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
@@ -403,12 +413,13 @@ BOOL $usuario, $existe
 
             case 6:
                 // mostrarListaOrdenada
-               // uasort($resumen, Jugador($palabras, $usuario)); //uasort: ordena los elementos usando una función de comparación definida por el usuario
-                //foreach($resumen as $indice=> $elemento) {
-                    echo "$indice = $elemento\n";
-                //}
-               // print_r($resumen); // quitar al final
-               // break;
+                $partidas = cargarPartidas();
+                uasort($partidas, 'compararJugadorPartida');
+             
+                print_r($partidas);
+              
+
+               break;
 
             case 7:
                 //agrega nueva palabra a la coleccion
