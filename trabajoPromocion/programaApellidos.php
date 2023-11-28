@@ -22,11 +22,11 @@ include_once("wordix.php");
 function cargarColeccionPalabras()
 {
     $coleccionPalabras = [
-        "MUJER", "QUESO", "FUEGO", "CASAS", "RASGO",
-        "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
-        "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
-        "CALOR", "OJERA", "PESOS", "LOCRO", "PASTO",
-        "LINDO"
+        "MUJER", "QUESO",// "FUEGO", "CASAS", "RASGO",
+        // "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
+        // "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
+        // "CALOR", "OJERA", "PESOS", "LOCRO", "PASTO",
+        // "LINDO"
     ];
 
     return $coleccionPalabras;
@@ -330,6 +330,7 @@ BOOL $usuario, $existe
     $usuario = solicitarJugador(); // preguntar si es necesario llamar a la función acá
     escribirMensajeBienvenida($usuario);
     $palabraSeleccionada = [];
+    $palabraAleatoria = [];
 
 
     do {
@@ -357,18 +358,20 @@ BOOL $usuario, $existe
 
             case 2:
                 $usuario = solicitarJugador();
-                $aleatoria = rand(0, count($palabras));     // rand: algoritmo que obtiene un número aleatorio sin que se repita
-                $existe = existePalabra($palabras, $aleatoria);
+                $aleatoria = rand(0, count($palabras) - 1);     // rand: algoritmo que obtiene un número aleatorio sin que se repita
+                
+                while (in_array($palabras[$aleatoria], $palabraAleatoria)) { 
+                    echo "\nYa utilizó todas las palabras. \n";
+                    break;
+                } 
 
-                if ($existe == true) { 
-                    echo "Ya utilizó todas las palabras. \n";
-                }
-                else {
-                    $partida = jugarWordix($palabras[$aleatoria], $usuario);
-                    $partidas = agregarPartida($partidas, $partida);  
-                    print_r($partidas);     // quitar al final
-                }
+                $palabraAleatoria[] = $palabras[$aleatoria];
 
+                $partida = jugarWordix($palabras[$aleatoria], $usuario);
+                $partidas = agregarPartida($partidas, $partida);  
+                print_r($partidas);     // quitar al final
+                
+            
                 break;
 
             case 3:
