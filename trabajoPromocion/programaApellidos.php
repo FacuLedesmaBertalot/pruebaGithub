@@ -7,9 +7,6 @@ include_once("wordix.php");
 // Ledesma, Facundo Nehuen. FAI - 4238. Tecnicatura en Desarrollo Web. faculedesmabertalot@gmail.com . FacuLedesmaBertalot
 // Maitena Durand. FAI - 5098. Tecnicatura en Desarrollo Web. maitenadurand@gmail.com . maitenadurand
 
-/* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github */
-/* ****COMPLETAR***** */
-
 
 /**************************************/
 /***** DEFINICION DE FUNCIONES ********/
@@ -224,7 +221,6 @@ include_once("wordix.php");
         $puntajeTotal = 0;
         $partidasJugadas = 0;
     
-
         foreach ($partidas as $partida) {  
 
             if ($partida["jugador"] == $jugador){
