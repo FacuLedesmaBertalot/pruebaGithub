@@ -370,7 +370,6 @@ BOOL $usuario, $existe
                 $partida = jugarWordix($palabras[$aleatoria], $usuario);
                 $partidas = agregarPartida($partidas, $partida);  
                 
-                
                 break;
 
             case 3:
@@ -408,14 +407,14 @@ BOOL $usuario, $existe
                 break;
 
             case 6:
-                // mostrarListaOrdenada
+                // mostrar lista ordenada por nombre
                 uasort($partidas, 'compararJugadorPartida');
                 print_r($partidas);
               
                break;
 
             case 7:
-                
+                // agregar palabra al juego
                 $nuevaPalabra = leerPalabra5Letras();
                 $existe = existePalabra($palabras,$nuevaPalabra);
 
@@ -429,7 +428,7 @@ BOOL $usuario, $existe
                 break;
 
             case 8:
-                //salir del programa
+                // salir del programa
                 echo "Saliendo del programa. ";
                 exit;
             
