@@ -345,6 +345,7 @@ BOOL $usuario, $existe
         switch ($opcion) {
 
             case 1: 
+                //jugar con palabra elegida
                 $usuario = solicitarJugador();
                 echo "Elija el número de la palabra que desea seleccionar: \n";
                 print_r($palabras);
@@ -365,6 +366,7 @@ BOOL $usuario, $existe
                 break;
 
             case 2:
+                //jugar con una palabra aleatoria
                 $usuario = solicitarJugador();
                 $aleatoria = rand(0, count($palabras) - 1);     // rand: algoritmo que obtiene un número aleatorio sin que se repita
                 
@@ -377,20 +379,20 @@ BOOL $usuario, $existe
 
                 $partida = jugarWordix($palabras[$aleatoria], $usuario);
                 $partidas = agregarPartida($partidas, $partida);  
-                print_r($partidas);     // quitar al final
+                
                 
                 break;
 
             case 3:
-
+                //mostrar una partida
                 $numSolicitado = solicitarNumeroEntre(1, count($partidas));
                 $mostrar = mostrarPartida($partidas, $numSolicitado);
-                print_r($mostrar);      // quitar al final
+                print_r($mostrar);  
                 
                 break;
                 
             case 4:
-
+                //mostrar primera partida ganadora
                 echo "\nIngrese el nombre del jugador que desea observar su primer victoria: ";
                 $jugador = trim(fgets(STDIN)); 
                 $primerPartidaGanada = primerPartidaGanada($partidas, $jugador);
@@ -401,13 +403,13 @@ BOOL $usuario, $existe
                 } else {
 
                     $mostrar = mostrarPartida($partidas, $primerPartidaGanada);
-                    print_r($mostrar);      // quitar al final
+                    print_r($mostrar);      
                 }
 
                 break;
 
             case 5: 
-
+                //mostrar estadisticas jugador
                 $usuario = solicitarJugador();
                 $resumen = estadisticasJugador($partidas, $usuario);
 
@@ -417,12 +419,9 @@ BOOL $usuario, $existe
 
             case 6:
                 // mostrarListaOrdenada
-                $partidas = cargarPartidas();
                 uasort($partidas, 'compararJugadorPartida');
-             
                 print_r($partidas);
               
-
                break;
 
             case 7:
@@ -439,6 +438,7 @@ BOOL $usuario, $existe
                 break;
 
             case 8:
+                //salir del programa
                 echo "Saliendo del programa. ";
                 exit;
 
