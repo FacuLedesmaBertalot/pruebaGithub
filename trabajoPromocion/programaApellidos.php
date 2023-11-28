@@ -302,6 +302,11 @@ function mostrarResumen($resumen) {
     }
 
 
+    /** Compara por letras del abecedario los nombres de los jugadores, en caso de ser iguales compara por palabra
+     * @param string $a
+     * @param string $b
+     * @return int 
+     */
     function compararJugadorPartida($a, $b) {
         $cmp = strcmp($a['jugador'], $b['jugador']);
         
