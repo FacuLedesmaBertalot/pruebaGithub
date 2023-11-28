@@ -15,18 +15,17 @@ include_once("wordix.php");
 /***** DEFINICION DE FUNCIONES ********/
 /**************************************/
 
-/**
- * Obtiene una colección de palabras
+/** Obtiene una colección de palabras
  * @return array
  */
 function cargarColeccionPalabras()
 {
     $coleccionPalabras = [
         "MUJER", "QUESO", "FUEGO", "CASAS", "RASGO",
-        "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
-        "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
-        "CALOR", "OJERA", "PESOS", "LOCRO", "PASTO",
-        "LINDO"
+         "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
+         "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
+         "CALOR", "OJERA", "PESOS", "LOCRO", "PASTO",
+         "LINDO"
     ];
 
     return $coleccionPalabras;
@@ -326,25 +325,20 @@ BOOL $usuario, $existe
 
 //Inicialización de variables:
 
-
-//Proceso:
-
-//$partida = jugarWordix("MELON", strtolower("MaJo"));
-//print_r($partida);
-
-//imprimirResultado($partida);
 */
 
     $palabras = cargarColeccionPalabras();
     $partidas = cargarPartidas();
-    $usuario = solicitarJugador(); // preguntar si es necesario llamar a la función acá
+    $usuario = solicitarJugador();
     escribirMensajeBienvenida($usuario);
     $palabraSeleccionada = [];
+    $palabraAleatoria = [];
 
 
     do {
         $opcion = seleccionarOpcion();
         switch ($opcion) {
+
             case 1: 
                 $usuario = solicitarJugador();
                 echo "Elija el número de la palabra que desea seleccionar: \n";
@@ -367,21 +361,23 @@ BOOL $usuario, $existe
 
             case 2:
                 $usuario = solicitarJugador();
-                $aleatoria = rand(0, count($palabras));     // rand: algoritmo que obtiene un número aleatorio sin que se repita
-                $existe = existePalabra($palabras, $aleatoria);
+                $aleatoria = rand(0, count($palabras) - 1);     // rand: algoritmo que obtiene un número aleatorio sin que se repita
+                
+                while (in_array($palabras[$aleatoria], $palabraAleatoria)) { 
+                    echo "\nYa utilizó todas las palabras. \n";
+                    break;
+                } 
 
-                if ($existe == true) { 
-                    echo "Ya utilizó todas las palabras. \n";
-                }
-                else {
-                    $partida = jugarWordix($palabras[$aleatoria], $usuario);
-                    $partidas = agregarPartida($partidas, $partida);  
-                    print_r($partidas);     // quitar al final
-                }
+                $palabraAleatoria[] = $palabras[$aleatoria];
 
+                $partida = jugarWordix($palabras[$aleatoria], $usuario);
+                $partidas = agregarPartida($partidas, $partida);  
+                print_r($partidas);     // quitar al final
+                
                 break;
 
             case 3:
+
                 $numSolicitado = solicitarNumeroEntre(1, count($partidas));
                 $mostrar = mostrarPartida($partidas, $numSolicitado);
                 print_r($mostrar);      // quitar al final
@@ -389,27 +385,30 @@ BOOL $usuario, $existe
                 break;
                 
             case 4:
+
                 echo "\nIngrese el nombre del jugador que desea observar su primer victoria: ";
                 $jugador = trim(fgets(STDIN)); 
                 $primerPartidaGanada = primerPartidaGanada($partidas, $jugador);
 
                 if ($primerPartidaGanada == -1) {
+
                     echo "El jugador ". $jugador . " no ganó ninguna partida. \n";
                 } else {
+
                     $mostrar = mostrarPartida($partidas, $primerPartidaGanada);
                     print_r($mostrar);      // quitar al final
                 }
+
                 break;
 
-
             case 5: 
-                // mostrarEstadisticas
-                $usuario= solicitarJugador();
+
+                $usuario = solicitarJugador();
                 $resumen = estadisticasJugador($partidas, $usuario);
 
-                print_r(mostrarResumen($resumen));
+                mostrarResumen($resumen);
 
-                    break;
+                break;
 
             case 6:
                 // mostrarListaOrdenada
