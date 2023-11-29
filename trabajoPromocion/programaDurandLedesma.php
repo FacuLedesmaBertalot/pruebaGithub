@@ -336,11 +336,8 @@ BOOL $usuario, $existe
             case 1: 
                 //jugar con palabra elegida
                 $usuario = solicitarJugador();
-                echo "Elija el número de la palabra que desea seleccionar: \n";
-                print_r($palabras);
-                
-                $num = trim(fgets(STDIN));
-                
+                $num = solicitarNumeroEntre(0, count($palabras));
+                 
                 while (in_array($num, $palabraSeleccionada)) { // in_array: recorre el array $palabraSeleccionada y se fija si el $num ya existe en él
                     echo "El número de palabra ya fue seleccionado por el jugador. \n";
                     echo "Elija otro número de palabra: ";
@@ -374,8 +371,7 @@ BOOL $usuario, $existe
             case 3:
                 //mostrar una partida
                 $numSolicitado = solicitarNumeroEntre(1, count($partidas));
-                $mostrar = mostrarPartida($partidas, $numSolicitado);
-                print_r($mostrar);  
+                $mostrar = mostrarPartida($partidas, $numSolicitado); 
                 
                 break;
                 
@@ -390,8 +386,7 @@ BOOL $usuario, $existe
                     echo "El jugador ". $jugador . " no ganó ninguna partida. \n";
                 } else {
 
-                    $mostrar = mostrarPartida($partidas, $primerPartidaGanada);
-                    print_r($mostrar);      
+                    $mostrar = mostrarPartida($partidas, $primerPartidaGanada);     
                 }
 
                 break;
@@ -423,7 +418,6 @@ BOOL $usuario, $existe
                     $palabras = agregarPalabra($palabras,$nuevaPalabra);
                 }
                 
-                print_r($palabras);
                 break;
 
             case 8:
