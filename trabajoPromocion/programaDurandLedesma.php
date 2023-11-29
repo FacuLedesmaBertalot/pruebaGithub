@@ -320,7 +320,6 @@ STRING $num, $numSolicitado, $mostrar, $nuevaPalabra
 BOOL $usuario, $existe
 
 //Inicialización de variables:
-
 */
 
     $palabras = cargarColeccionPalabras();
