@@ -336,7 +336,7 @@ BOOL $usuario, $existe
             case 1: 
                 //jugar con palabra elegida
                 $usuario = solicitarJugador();
-                $num = solicitarNumeroEntre(0, count($palabras));
+                $num = solicitarNumeroEntre(0, count($palabras) -1);
                  
                 while (in_array($num, $palabraSeleccionada)) { // in_array: recorre el array $palabraSeleccionada y se fija si el $num ya existe en él
                     echo "El número de palabra ya fue seleccionado por el jugador. \n";
