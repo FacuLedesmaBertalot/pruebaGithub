@@ -77,7 +77,6 @@ include_once("wordix.php");
 /** Se le solicita al usuario un número de partida y se muestra en pantalla
  * @param array $partidas
  * @param int $num
- * @return string
  */
     function mostrarPartida($partidas, $num) {  // * recorrido parcial * // 
         // int $numPartida, $n, $i
@@ -88,14 +87,15 @@ include_once("wordix.php");
             echo "Jugador: ". $partidas[$i]["jugador"] ."\n";
             echo "Puntaje: ". $partidas[$i]["puntaje"] . " puntos\n";
             
-            if ($partidas[$i]["intentos"] != 6) {
+            if ($partidas[$i]["intentos"] != 0) {
                 echo "Adivinó la palabra en ". $partidas[$i]["intentos"] ." intentos.\n";
-                echo "***************************************************\n";
+            
             }
             else {
                 echo "No adivinó la palabra\n";
-                echo "***************************************************\n";
+                
             }
+            echo "***************************************************\n";
         }
 
 
@@ -115,18 +115,18 @@ include_once("wordix.php");
 
         while ( $i < $cantPartidas &&  !$encontrada){
 
-            if ($partidas[$i]["jugador"] == $nombre) {
-
-                if ($partidas[$i]["puntaje"] > 0){
+            if ($partidas[$i]["jugador"] == $nombre && $partidas[$i]["puntaje"] > 0) {
 
                     $indice = $i + 1;
                     $encontrada = true;
                 }
             }
             $i++;
+
+            return $indice;
         }
-        return $indice;
-    }
+        
+    
 
 
 /** Función que solicita el nombre del jugador
@@ -231,11 +231,7 @@ include_once("wordix.php");
                     $victoriaJugador = $victoriaJugador + 1;
                 }
 
-                $porcVictoria = ($victoriaJugador * 100) / $partidasJugadas;
-
                 $numeroInt = $partida["intentos"];
-
-                while ($numeroInt > 0){
 
                     if ($numeroInt == 1) {
                         $intento1 = $intento1 + 1;
@@ -255,10 +251,12 @@ include_once("wordix.php");
                     elseif ($numeroInt == 6 && $partida["puntaje"]> 0) {
                             $intento6 = $intento6 + 1;         
                     } 
-                    break;
+               
+                $porcVictoria = ($victoriaJugador * 100) / $partidasJugadas;
             }
+           
         }
-    }
+    
         
         $resumen = [
             'jugador' => $jugador, 'partidas'=> $partidasJugadas, 'puntaje' => $puntajeTotal,'victorias' => $victoriaJugador,
@@ -266,13 +264,13 @@ include_once("wordix.php");
             'intento4' => $intento4, 'intento5' => $intento5, 'intento6' => $intento6
         ];
         return $resumen;
-
     }
+    
 
 
 /** Muestra el resumen de un jugador de una forma legible para el usuario
  * @param array $resumen
- * @return string
+ * 
  */
     function mostrarResumen($resumen) {  
             echo "***************************************************\n";
@@ -294,19 +292,33 @@ include_once("wordix.php");
 
 
 /** Compara por letras del abecedario los nombres de los jugadores, en caso de ser iguales compara por palabra
- * @param string $a
- * @param string $b
+ * @param string $partida1
+ * @param string $partida2
  * @return int 
  */
-    function compararJugadorPartida($a, $b) {
-        $cmp = strcmp($a['jugador'], $b['jugador']);
-        
-        if ($cmp == 0) {
-          $cmp = strcmp($a['palabraWordix'], $b['palabraWordix']);
+    function compararJugadorPartida($partida1, $partida2) {
+        if ($partida1['jugador'] == $partida2['jugador']) {
+            if ($partida1['palabraWordix'] == $partida2['palabraWordix']) {
+                $cmp =0;
+            } elseif ($partida1['palabraWordix'] < $partida2['palabraWordix']) {
+                $cmp =-1;
+                
+            }else {
+                $cmp =1;
+
+            }
+        }
+        if ($partida1['jugador'] < $partida2['jugador']) {
+                 $cmp =-1;
+
+            }else {
+                 $cmp =1;
+        }
+            return$cmp;
         }
         
-        return$cmp;
-    }
+      
+    
 
     
 /**************************************/
