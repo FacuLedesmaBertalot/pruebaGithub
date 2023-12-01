@@ -45,10 +45,10 @@ include_once("wordix.php");
         $cargarPartidas[9] = ["palabraWordix"=> "PASTO", "jugador"=> "lucia", "intentos"=> 2, "puntaje"=> 5];
         $cargarPartidas[10]= ["palabraWordix"=> "QUESO", "jugador"=> "martin", "intentos"=>2,"puntaje"=>5];
         $cargarPartidas[11]= ["palabraWordix"=> "PASTO", "jugador"=> "martin", "intentos"=>4,"puntaje"=>3];
-        $cargarPartidas[12]= ["palabraWordix"=> "FUEGO", "jugador"=> "luciana", "intentos"=>1,"puntaje"=>6];
+        $cargarPartidas[12]= ["palabraWordix"=> "FUEGO", "jugador"=> "martin", "intentos"=>1,"puntaje"=>6];
         $cargarPartidas[13]= ["palabraWordix"=> "QUESO", "jugador"=> "maria", "intentos"=>2,"puntaje"=>5];
         $cargarPartidas[14]= ["palabraWordix"=> "LINDO", "jugador"=> "maria", "intentos"=>4,"puntaje"=>3];
-        $cargarPartidas[15]= ["palabraWordix"=> "YUYOS", "jugador"=> "marcos", "intentos"=>2,"puntaje"=>5]; 
+        $cargarPartidas[15]= ["palabraWordix"=> "YUYOS", "jugador"=> "maria", "intentos"=>2,"puntaje"=>5]; 
         
         return $cargarPartidas;   
     }
@@ -127,8 +127,6 @@ include_once("wordix.php");
         }
         
     
-
-
 /** Función que solicita el nombre del jugador
  * @return bool
  */
@@ -201,7 +199,6 @@ include_once("wordix.php");
 
         return $coleccionPartidas;
     }
-
 
 
 /** Almacena las estadísticas del jugador
@@ -316,30 +313,49 @@ include_once("wordix.php");
         }
             return$cmp;
         }
+
+
+/** Función que verifica si el jugador ya jugó con esa palabra
+ * @param array $palabras
+ * @param array $partidas
+ * @param string $usuario
+ * @return bool
+ */
+    function verificarJugador($palabras, $partidas, $usuario) {
+        // bool $verificarJugador int $cantPartidas
+
+        $cantPartidas = count($partidas);
+        $verificarJugador = false;
+
+        for ($i = 0 ; $i < $cantPartidas ; $i++) {
+            if ($partidas[$i]["palabraWordix"] == $palabras && $partidas[$i]["jugador"] == $usuario) {
+                echo "\nEl número de palabra ya fue utilizado por el jugador. \n";
+                $verificarJugador = true; 
+            }
+                
+
+        }
+
+        return $verificarJugador;
+    }
         
       
-    
-
     
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
 
 /**Declaración de variables:
-ARRAY $palabras, $partidas, $palabraSeleccionada, $partida, $resumen
-INT $opcion, $aleatoria
-STRING $num, $numSolicitado, $mostrar, $nuevaPalabra
-BOOL $usuario, $existe
+ARRAY $palabras, $partidas, $partida, $resumen
+INT $opcion, $aleatoria, $num
+STRING $numSolicitado, $mostrar, $nuevaPalabra
+BOOL $usuario, $existe, $verificarJugador
 
 //Inicialización de variables:
 */
 
     $palabras = cargarColeccionPalabras();
     $partidas = cargarPartidas();
-    $usuario = solicitarJugador();
-    escribirMensajeBienvenida($usuario);
-    $palabraSeleccionada = [];
-    $palabraAleatoria = [];
 
     do {
         $opcion = seleccionarOpcion();
@@ -347,41 +363,40 @@ BOOL $usuario, $existe
 
             case 1: 
                 //jugar con palabra elegida
+
                 $usuario = solicitarJugador();
-                $num = solicitarNumeroEntre(0, count($palabras) -1);
-                 
-                while (in_array($num, $palabraSeleccionada)) { // in_array: recorre el array $palabraSeleccionada y se fija si el $num ya existe en él
-                    echo "El número de palabra ya fue seleccionado por el jugador. \n";
-                    echo "Elija otro número de palabra: ";
-                    $num = trim(fgets(STDIN));
+                $num = solicitarNumeroEntre(1, count($palabras));
+                $verificarJugador = verificarJugador($palabras[$num - 1], $partidas, $usuario);
+                
+                while ($verificarJugador == true) { 
+                    $num = solicitarNumeroEntre(1, count($palabras));
+                    $verificarJugador = verificarJugador($palabras[$num - 1], $partidas, $usuario);
                 }
 
-                $palabraSeleccionada[] = $num;
-
-                $partida = jugarWordix($palabras[$num], $usuario);
+                $partida = jugarWordix($palabras[$num - 1], $usuario);
                 $partidas = agregarPartida($partidas, $partida);  
-
+                
                 break;
 
             case 2:
                 //jugar con una palabra aleatoria
+
                 $usuario = solicitarJugador();
-                $aleatoria = rand(0, count($palabras) - 1);     // rand: algoritmo que obtiene un número aleatorio sin que se repita
-                
-                while (in_array($palabras[$aleatoria], $palabraAleatoria)) { 
-                    echo "\nYa utilizó todas las palabras. \n";
-                    break;
-                } 
+                $aleatoria = rand(0, count($palabras) - 1); 
+                $verificarJugador = verificarJugador($palabras[$aleatoria], $partidas, $usuario);
 
-                $palabraAleatoria[] = $palabras[$aleatoria];
-
+                if ($verificarJugador == true) { 
+                    echo "\n Ya utilizó todas las palabras disponibles. \n";
+                } else {
                 $partida = jugarWordix($palabras[$aleatoria], $usuario);
                 $partidas = agregarPartida($partidas, $partida);  
-                
+                }
+
                 break;
 
             case 3:
                 //mostrar una partida
+
                 $numSolicitado = solicitarNumeroEntre(1, count($partidas));
                 $mostrar = mostrarPartida($partidas, $numSolicitado); 
                 
@@ -389,6 +404,7 @@ BOOL $usuario, $existe
                 
             case 4:
                 //mostrar primera partida ganadora
+
                 echo "\nIngrese el nombre del jugador que desea observar su primer victoria: ";
                 $jugador = trim(fgets(STDIN)); 
                 $primerPartidaGanada = primerPartidaGanada($partidas, $jugador);
@@ -405,15 +421,16 @@ BOOL $usuario, $existe
 
             case 5: 
                 //mostrar estadisticas jugador
+
                 $usuario = solicitarJugador();
                 $resumen = estadisticasJugador($partidas, $usuario);
-
                 mostrarResumen($resumen);
 
                 break;
 
             case 6:
                 // mostrar lista ordenada por nombre
+
                 uasort($partidas, 'compararJugadorPartida');
                 print_r($partidas);
               
@@ -421,6 +438,7 @@ BOOL $usuario, $existe
 
             case 7:
                 // agregar palabra al juego
+
                 $nuevaPalabra = leerPalabra5Letras();
                 $existe = existePalabra($palabras,$nuevaPalabra);
 
@@ -434,7 +452,10 @@ BOOL $usuario, $existe
 
             case 8:
                 // salir del programa
-                echo "Saliendo del programa. ";
+
+                echo "Saliendo del juego. ";
+                echo "Gracias por jugar Wordix!\n";
+                echo "***************************************************\n";
                 exit;
             
             }
