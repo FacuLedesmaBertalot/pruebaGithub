@@ -120,8 +120,9 @@ include_once("wordix.php");
                     $indice = $i + 1;
                     $encontrada = true;
                 }
+                $i++;
             }
-            $i++;
+            
 
             return $indice;
         }

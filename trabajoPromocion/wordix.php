@@ -357,7 +357,7 @@ function obtenerPuntajeWordix($nroIntento, $palabra)
             $letra = $palabra[$i];
             if (in_array($letra, $vocales)) {
                 $puntajeLetra = $puntajeLetra + 1;
-            } elseif ($letra>= 'A' && $letra <= 'M') {
+            } elseif ($letra >= 'A' && $letra <= 'M') {
                 $puntajeLetra = $puntajeLetra + 2;
             } else {
                 $puntajeLetra = $puntajeLetra + 3;
