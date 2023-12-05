@@ -250,10 +250,11 @@ include_once("wordix.php");
                             $intento6 = $intento6 + 1;         
                     } 
                
-                $porcVictoria = ($victoriaJugador * 100) / $partidasJugadas;
+                
             }
            
         }
+        $porcVictoria = ($victoriaJugador * 100) / $partidasJugadas;
     
         
         $resumen = [
@@ -324,17 +325,18 @@ include_once("wordix.php");
  */
     function verificarJugador($palabras, $partidas, $usuario) {
         // bool $verificarJugador int $cantPartidas
-
         $cantPartidas = count($partidas);
         $verificarJugador = false;
+        $i = 0;
 
-        for ($i = 0 ; $i < $cantPartidas ; $i++) {
+        while ($verificarJugador == false && $i < $cantPartidas) {
             if ($partidas[$i]["palabraWordix"] == $palabras && $partidas[$i]["jugador"] == $usuario) {
                 echo "\nEl número de palabra ya fue utilizado por el jugador. \n";
-                $verificarJugador = true; 
+                $verificarJugador = true;
+                 
             }
+            $i++;
                 
-
         }
 
         return $verificarJugador;
